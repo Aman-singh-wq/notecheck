@@ -1,0 +1,5 @@
+Azure Application Insight
+*********************************
+logs storage
+live logs 
+application monitoring

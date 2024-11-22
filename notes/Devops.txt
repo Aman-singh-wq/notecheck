@@ -1,0 +1,1032 @@
+deva - 3500
+raman - 20000
+amit - 15000
+pankaj - 30000
+
+IP:40.121.93.218
+Port:4605
+username:cqm
+password: Noskript#123
+NoSkriptSpringBootRepo
+https://preprod.noskript.com/
+Abin Varghese - python
+nspreprod - ui
+jarfileloader
+New VM @ Darwin
+darwincqm@52.184.193.240
+password Noskript#123
+
+
+pipeline
+****************
+system.debug=true
+
+sh is an updated version of bash script.
+
+Sarpreprod
+saran@123
+mgtt3gq33qfa232k5llvldwjpm2agr4a6ty56xfdvzmzr7dubj4a
+https://dev.azure.com/UST-Defaultcollection/USTI-DGTF-DL-EQ/_git/NoskriptClientRepo
+https://dev.azure.com/UST-Defaultcollection/USTI-DGTF-DL-EQ/_build?definitionId=74
+
+
+Parvathy.Maheswari@ust.com
+Appointment Letter
+
+ustglobalproject -> execute -> amazonTS 
+NoSkriptSpringBootRepo 
+NoskriptSpringBootRepo\scriptless\target
+
+WindowsServerSupport@ust.com 
+10.100.101.163
+194356@ustr.com
+
+export http_proxy=http://172.27.17.50:9400
+export https_proxy=http://172.27.17.50:9400
+
+cache 30
+        loop
+        reload
+        loadbalance
+
+
+curl -ks
+
+/home/cqm/git/NoskriptClientRepo/scriptless-client/src/main/java/com/ust/scriptless/client/runner
+reflection
+file handler
+decryption
+framework
+client/src/main/java/com/ust/scriptless/client/runner
+
+Tracert - to check the packet transfer
+
+Kuberenetes issues and Solutions
+***********************************************************************************************************************************************************
+
+Err:5 https://packages.cloud.google.com/apt kubernetes-xenial Release
+  Certificate verification failed: The certificate is NOT trusted. The certificate issuer is unknown.  Could not handshake: Error in the certificate verification. [IP: 172.27.17.50 9400]
+********************************************************************************************************************************************
+touch /etc/apt/apt.conf.d/99verify-peer.conf \
+&& echo >>/etc/apt/apt.conf.d/99verify-peer.conf "Acquire { https::Verify-Peer false }"
+
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+****************************************************************************************************
+
+no certificate for wget
+********************************
+wget --no-check-certificate https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz
+git config --global http.sslVerify false
+git clone --branch 3.141.59e  --depth 1
+$ git clone http://github.com/large-repository --depth 1
+$ cd large-repository
+$ git fetch --unshallow
+
+chinnu.prasad1@ust.com/test@123
+registry.gitlab.com/v2/noskript/
+
+Unable to connect to the server: net/http: TLS handshake timeout
+*********************************************************************
+unset http_proxy
+unset https_proxy
+
+Error: ErrImagePull or ImagePullBackOff
+*********************************
+download the images to your local server and make imagePullPolicy: Never instead of always
+
+CrashLoopBackOff
+****************************************
+It tells us that Kuberenetes is trying to launch this Pod, but one or more of the containers is crashing or getting killed.
+
+RunContainerError
+**************************
+it is running but in between it is looking for config file but it is not able to find
+
+To check the status of kubernetes
+******************************************
+kubectl get cs
+kubectl version --short
+kubelet --version
+
+Gitlab
+*************
+chinnu.prasad1.ust.com/test@123
+
+install particular version of kubernetes
+*******************************************
+kubelet=1.21.0-00
+
+helm install keycloak ./helm
+helm install -f vsc/prod-values.yaml vscode ./vsc
+
+Command to install specific version of kubernetes
+*********************************************************
+apt-get install -y  kubelet=1.19.2-00 kubeadm=1.19.2-00 kubectl=1.19.2-00
+
+azindsteapl005
+azindsteapl007
+
+If kube dns is not starting in kubenetes cluster ususally happen when you reinstall the kubernetes(needs to run on master as well as node)
+**********************************************************************************************************
+kubeadm reset
+systemctl stop kubelet
+systemctl stop docker
+rm -rf /var/lib/cni/
+rm -rf /var/lib/kubelet/*
+ifconfig docker0 down
+rm -rf /etc/cni/
+ifconfig cni0 down
+ifconfig flannel.1 down
+ip link delete cni0
+ip link delete flannel.1
+
+If core Dns container is not starting check the network of pod/node/network it shouldn't be same.
+
+if scheduler is unhealthy
+***********************************
+/etc/kubernetes/manifests/kube-scheduler.yaml 
+edit it and make port 0
+
+Restart the pods 
+**********************************
+kubectl rollout restart -n kube-system deployment/coredns
+
+pause container will always run unside the pod so its job is even if container is restarting it will keep the ip address of the pod
+
+K10
+*****************************
+it can take the backup of entire application
+
+
+Backup and Restore of Database
+*************************************
+DUMP
+// pod-name         name of the postgres pod
+// postgres-user    database user that is able to access the database
+// database-name    name of the database
+kubectl exec [pod-name] -- bash -c "pg_dump -U [postgres-user] [database-name]" > database.sql
+
+RESTORE
+// pod-name         name of the postgres pod
+// postgres-user    database user that is able to access the database
+// database-name    name of the database
+kubectl exec postgres-78bbf847c6-c8r6s -n keycloak-ns -- bash -c "pg_dump -U pgche dbche" > keycloak-backup.dump
+kubectl exec [pod-name] -- \
+    bash -c "pg_dump -U [postgres-user] [database-name]" > database.sql
+cat database.sql | kubectl exec -i [pod-name] -- \
+    psql -U [postgres-user] -d [database-name]
+Helm Chart
+***************************************
+it is a package manager for kubernetes
+helm create demochart (it will create dummy chart where you can edit and do other configuration)
+helm list -a (to list all the deployment)
+helm - we can directly use the chart which is managed by helm for that we need to add the repo and install.
+helm repo add reponame repourl
+helm template - command will show how our yaml look like
+helm lint - this will compile the chart and show if any defect
+helm upgrade name - this will update the cluster as per the value we updated in conf files
+helm rollback name 1 - to rollback the changes in the clusterNIKKY@o*390
+
+Kubernetes certificate expiry check
+****************************************
+kubeadm certs check-expiration - this will list the expiry date of all
+kubeadm certs renew all - this will renew all the certificate
+
+Ingress
+************************
+evaluates all the rules
+manages redirections
+entrypoint to cluster
+
+******************************************************************************************************************************************************************
+
+Jenkins
+***********************
+manage jenkins - global credentials
+sshput command to put the yaml file
+
+Database
+******************************
+kubectl exec -it my-postgres-0 -- psql
+kubectl cp keycloak-backup.sql keycloak-ns/postgres-78bbf847c6-c8r6s:/tmp/
+
+kubectl create secret docker-registry regcred --docker-server=registry.gitlab.com --docker-username=chinnu.prasad1@ust.com --docker-password=test@123 -n skriptless
+
+Adding tls certificate
+*************************************
+Copy certificates as individual files in .crt format into the location, /usr/local/share/ca-certificates/
+
+Update the CA store using the following command:
+sudo update-ca-certificates  - if successful output should show "1 added"
+
+cronjob
+*****************************
+use absolute path
+don't use % if you are going to use script in cronjob
+
+License and DNS
+**************************************
+for DNS we have to get approval from Suja and raise islve ticket
+for SSL we have to drop email to Licence Management Team....for that also we need approvals from Suja
+
+
+
+sudo -i -u postgres
+psql
+
+To check the public IP
+*************************************
+checkip.dyndns.org
+
+To check internet connectivity
+***************************************
+wget google.com
+
+To check the public IP of the server
+********************************************
+curl checkip.dyndns.org
+
+Complete detail of network
+*********************************
+curl -v https://ifconfig.me
+
+Vscode we need to create a directory manually
+*****************************************************
+/home/coder/.local/share/code-server
+
+docker login -u “amansingh” -p “679KtD6Dv7MpWh8k9s3_”
+docker login -u “chinnu.prasad1@ust.com” -p “test@123”
+docker build -t registry.gitlab.com/noskript/noskript-client .
+
+USTP-QEPF-BU-00
+RITM0706344
+registry.gitlab.com/noskript/noskript-client
+registry.gitlab.com/noskript/noskript-main
+registry.gitlab.com/noskript/database
+java-application
+
+select * from realm;
+kubernetes.io/ingress.class: nginx-nlb
+
+command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+	
+•	https://www.openpolicyagent.org/
+•	https://github.com/accurics/terrascan
+
+E-Nomination in the Universal Account Number (UAN)/ PF Account
+
+
+
+31111 - zalenium
+keycloak - 31115
+workspace - 31119
+31203 - preprod ws
+
+vscode permission issue
+***********************************
+create /home/coder/.local/share/code-server directory manually.
+
+To prevent the node from scheduling new pods
+***********************************************
+kubectl cordon <node-name>
+
+
+To Allow the node from scheduling new pods
+***********************************************
+kubectl uncordon <node-name>
+
+Taint
+*****************************
+we can use taint to make the same child and master node we can change the setting accordingly
+kubectl uncordon noskript-cqm
+kubectl taint nodes noskript-cqm key1=value1:NoSchedule- => remove the taint
+
+Zalenium Images
+****************************************
+docker tag elgalu/selenium:3.141.59-p15 registry.gitlab.com/noskript/zalenium/selenium:1
+docker tag noskriptregitry/zalenium:cccc registry.gitlab.com/noskript/zalenium:1
+
+To check the images running inside the cluster
+******************************************************
+kubectl get pods -n zalenium -o jsonpath={.items[*].spec.containers[*].image}
+
+Boards
+**********************
+Epic 
+Feacture
+work Item
+
+New image of keycloak
+******************************
+registry.gitlab.com/noskript/keycloak:5.0
+
+To generate csr
+*******************************************
+openssl req -new -newkey rsa:2048 -nodes -keyout cqm.noskript.com.key -out cqm.noskript.com.csr
+
+Command to convert crt file to pfx format
+****************************************************************
+Get-Content jenkins_noskript_com.crt, USERTrustRSAAAACA.crt, SectigoRSADomainValidationSecureServerCA.crt, AAACertificateServices.crt  | Set-Content bundle.crt
+openssl pkcs12 -inkey jenkins.noskript.com.key -in bundle.crt -export -out jenkins.noskript.com.pfx
+
+To check the valid certificate and details
+*************************************************
+openssl s_client -connect preprod.noskript.com:443 -servername preprod.noskript.com
+
+RITM0732028
+openid-connect
+codeserver
+
+Refused to execute script from 'http://34.121.192.117/scriptless/main.bc15fe05029964b64a95.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
+
+ kubectl logs -f code-server-86bb88f6cf-mbjps -c openid-connect -n workspace1
+
+Ingress controller 
+***************************
+can be deployed as a daemon-set or deployment
+
+PV and PVC
+**************************
+Reclaim policy
+*****************
+Retain
+Recycle
+Delete
+
+Access mode
+*****************
+Read write once
+Read write many
+Read only
+
+Images
+**************************
+java-application:1
+tomcat:9.0.48-jdk11-adoptopenjdk-hotspot
+
+DNS modification management 
+********************************
+For new DNS go to dns modification - search for Noskript - subdomain you can give - select A category 
+
+Resource group production 
+********************************
+UST Production
+here our VM or cluster is running
+
+UST Production PaaS
+here our app services are running
+
+UST_NOSKRIPT_RG
+windows
+
+UST_NOSKRIPT_QEPFRG
+machines
+
+Azure key vault
+*************************
+we can create key vault
+than we can create client id and secret from azure and use in our code 
+
+Keycloak ad integration
+****************************
+https://confluence.dagility.com/display/ED3/Keycloak+Integration+with+AD+Server
+
+Document for Cab CR
+*****************************
+https://ustglobal.service-now.com/kb_view.do?sysparm_article=KB0010033
+UST - PROD
+
+To give access to key vault
+**********************************
+add access policy and add managed identity
+
+Python
+************************************************************************************************************************
+
+List
+****************
+[]
+changeable, Allow Duplicates, ordered
+
+Tuples
+******************
+()
+ordered, unchangeable, Allow Duplicates
+
+Sets
+*******************
+{}
+unordered, unchangeable, duplicates not allowed
+
+Dictionaries
+********************
+{}
+Changeable, duplicates not allowed , ordered
+
+if b>a:
+  lll
+elif:
+  www
+else:
+  aaa
+  
+while i<2:
+
+****************************************************************************************************************************
+disk
+**************
+all disk we can check 
+***************
+lsblk
+
+Detailed view 
+**************
+lshw
+
+sda
+*****
+primary owner disk
+
+sdb
+*********
+secondary owner disk
+
+sdc
+**********
+external disk
+
+12345
+/opt/lampp/etc/httpd.conf
+/opt/lampp/htdocs/
+
+taskkill /IM tomcat9.exe /F
+
+GKE google kubernetes engine
+****************************************************
+Managed kubernetes service
+Minimize operations with auto-repair
+kubernetes engine - enabled
+kubernetes engine -> create cluster 
+
+after creating cluster we can connect to the project 
+gcloud config set project projectID
+we will have bydefault 1 node pool which willhave 3 nodes we can add more node pools.
+we can change the configuration of yml file from the cloud UI itself.
+
+EKS 
+*************************************
+master node will be managed by AWS 
+search for eks
+create cluster service role
+select VPC 
+slelect subnet
+create
+now once the cluster is setup we can go to compute and add node group under which I can add nodes
+
+
+To see ssl certificate request status
+********************************************
+orion finance - requisition - extreme right - navigator - new PR status page
+
+Onlinebuy.biz
+***********************
+10.11.1.67login
+cmd - open with admin
+go to C:\apache-tomcat-9.0.19\apache-tomcat-9.0.19\bin
+catalina.bat stop
+catalina.bat start
+
+291633 - agent
+374873 - zalenium
+292353 - web
+292313 - mssql
+
+User : 194356
+Pass :  zW6uB4uL
+
+*#*#4636#*#*
+DEC@o*390890
+CHG0013723
+
+https://jira.dagility.com/projects/DDO/issues
+https://rancher.dagility.com/login
+How to Setup HTTPS/SSL/TLS on Google Cloud Platform-data slayer
+https://UST-Defaultcollection@dev.azure.com/UST-Defaultcollection/USTI-DGTF-DL-EQ/_git/NoskriptUI
+
+tcpdump -i any net ip/subnet - this will check the packet transfer 
+
+LIC jeevan akshay plan
+277406 - goibgo 
+gcpnoskript
+Noskript#123
+
+http://34.120.132.44
+pnb - 378
+gsfc - 175
+noskriptweb , roicalweb , skriptmate , tcgenweb
+
+GCP Load balancer
+*************************
+load balncer - gke (node port)
+130.211.0.0/22
+35.191.0.0/16 
+these ip's we can add in firewall rules
+
+App service
+**********************
+In docker base app service 
+/home will get mounted to file manager of app service plan so whatever data is thr in /home of docker container we will be able to see in advance tool
+newui in url and home
+/home mounted to kudu container
+memory cpu uses we can check in app service plan link in app service 
+We can run app service on private network 
+we can go to networking and enable private endpoints and do the vnet integration after enabling private endpoint we won't be able to access app service
+over internet.
+
+
+Self hosted Agent in azure devops
+*************************************
+download the tar file in linux server 
+extract the file
+run ./config.sh
+than run 
+./svc.sh install username - this will run the agent as a service 
+./run.sh - this is for running the agent interactively
+
+
+172.27.16.139 server in production
+*****************************
+USername : 194356 Pass : uVEixexJehiD4OB9
+
+Shares 
+**************
+hdfc band 
+hadfc life
+icici bank 
+icici life
+sail
+tata steel
+tata motors
+dmart
+titan
+Adani ports
+
+
+
+Kuberenetes installation troubleshooting
+**************************************************
+Install docker 
+start docker 
+swap memory off
+install kubernetes and install specific stable version as if you will not mention version it will update with latest version it may have some errors
+if you are using flannel network use --pod-network-cidr=10.244.0.0/16 with kubeadm init command
+if anything is failing first check 
+kubectl get cs - this will show all the services health
+kubeadm reset - this we can use to reset the changes for all the kube-system pods
+
+GKE
+********************************
+production cluster will not never be a pulic cluster 
+so to create a private cluster we need to go to networking and select private
+now to connect to a cluster we need to add our IP to Control plane authorized networks
+and if we want to connect with gcloud shell we need to add that public IP to get the public IP we can use dig +short myip.opendns.com @resolver1.opendns.com
+
+SQL server in cloud
+****************************
+we can host sql server in private networkas well and to connect to that sql server we might need to create a vm in the same netword and connect
+
+tocheck iphone
+********************
+checkcoverage.apple.com
+
+RBAC
+**********************
+To check the authorization mechanism we can check the the 
+kubectl edit pod -n kube-system kube-apiserver-kind-control-plane here we can check the field --authorization-mode
+
+rbac.authorization.k8s.io
+role
+role binding
+cluster role
+cluster role binding
+
+role and role binding are helpful when we want to give access with in the namespace to particular user
+cluster role and cluster binding is for entire cluster 
+so we can create a cluster role and bind using cluster role binding if we want to provide access in multiple namespaces
+
+All the resources in ubuntu
+********************************
+facter
+
+DNS record
+**********************
+cname means www wala 
+so it means if our cname is www.xyz.com and pointing to xyz than whenever traffic coming to www.xyz.com will go to xyz and than to the pointing one of xyz
+ 
+
+GCP
+**************************
+sqlcmd -S localhost -U sa -P Noskript#123
+sqlcmd -S localhost -U sa -P Noskript#123  -i /tmp/test.sql
+gcloud compute scp --project=gms-wb-ustnoskript-d --zone=us-central1-a keycloak.noskript.pfx noskript-database:/tmp/
+gcloud compute ssh --project=gms-wb-ustnoskript-d --zone=us-central1-a noskript-database
+1> CREATE LOGIN zebra WITH PASSWORD = 'zebra@123';
+2> go
+1> create user zebra for login zebra with default_schema=[noskript2]
+2> go
+1> EXEC sp_addrolemember N'db_ddladmin', N'zebra'
+2> go
+1> EXEC sp_addrolemember N'db_ddladmin', N'username'
+Identity-Aware Proxy
+nerunjakumar.soubaya@zebra.com
+
+AKS
+***************
+https://learn.microsoft.com/en-us/azure/application-gateway/configuration-request-routing-rules
+https://learn.microsoft.com/en-us/azure/application-gateway/ssl-overview
+https://learn.microsoft.com/en-us/azure/application-gateway/ingress-controller-install-existing#multi-cluster--shared-application-gateway
+https://learn.microsoft.com/en-us/azure/application-gateway/ingress-controller-letsencrypt-certificate-application-gateway
+https://learn.microsoft.com/en-us/azure/application-gateway/tutorial-ingress-controller-add-on-new
+
+AKS certficate
+*******************
+https://github.com/tadeugr/aks-references/tree/master/AKS-Network#-hands-on--external-nginx-ingress--cert-manager-letsencrypt--external-dns
+https://github.com/tadeugr/aks-references/tree/master/AKS-Network#-hands-on--internal-nginx-ingress--cert-manager-self-signed--external-dns
+https://github.com/tadeugr/aks-references/tree/master/Create-an-AKS-Cluster#-hands-on--using-azure-cli--acr--k8s-dashboard
+
+SSL certficate
+***************************
+product name - certificatename 
+1st - comodo
+NS8726
+ZebraAutomation@108*
+
+9759653948
+journalctl -u mssql-server.service -b
+
+ZEBR-0001-01-00
+USTP-QEPF-BU-00
+
+SELECT s.name AS schema_name,u.name AS schema_owner FROM sys.schemas s INNER JOIN sys.sysusers u ON u.uid = s.principal_id
+USE yourDatabase;
+ALTER USER [dbo] WITH DEFAULT_SCHEMA = noskript2;
+
+onedrive link
+****************************
+https://ustglobal.sharepoint.com/sites/Digitaltransformation/EnterpriseAssurance/Repository/Forms/AllItems.aspx?id=%2Fsites%2FDigitaltransformation%2FEnterpriseAssurance%2FRepository%2FPlatform%20Development&viewid=5e9f0bf6%2D3313%2D4ca2%2D8e50%2D7d4856608a35
+
+Google cloud armour service
+***************************************
+armour will have policy - rules - expression
+Security policies
+Rules Language
+Preconfigured WAF rules
+Named IP address lists
+Google cloud Armor Adaptive Protection
+
+security policies are sets of rules that match on attributes from layer 3 to layer 7 to protect externally facing applications or services.
+we have some preconfigured WAF rules like SQL injection, cross-site scripting, PHP injection attack etc.
+
+gcloud scp command
+*******************************
+gcloud compute scp filename noskript-database:/tmp/
+gcloud compute ssh noskript-database
+
+Azure cloud 
+**********************************
+we have azure defender like we have cloud armor in gcp
+
+OSI
+*************************
+open system interconnection-
+sender-
+Application layer - http protocol work on it 
+presentation layer - it will check data is getting send in which layer and ency decryption will happen 
+session layer - this will make a connection between sender and reciever
+Tranport layer - it will divide the data in small segment
+Network layer - it will divide segment to small packet here actual routing will happen
+Data link layer - it will frame the data , mention the speed 
+physical - data will be in 0 and 1 binary data will be in bits , it will decide the reciever data via wire or wireless
+
+Reciever - ulta of reciver format
+
+******************************************************************************************
+sender
+********************************************************************
+1	Application Layer	Application layer provieds user interface, used by end-user such as web browsers, Gmails, ms-word etc. (Ex. HTTP, FTP, POP, SMTP, DNS)
+2	Presentataion Layer	is responsible for translate the data in readable format, encryption and decryption (mp3, .doc, .pdf. .exe)
+3	Session Layer	chcek and established the connection between sender and receiver
+4	Transport Layer	transport layer converts data into segments, means data dividing into small small packets
+5	Network Layer	is responsible for transfer the data over the network, select the best path to deliever the data, TCP/ UDP, Switches and Routers works on Network layer, attach source and destination IP Address
+6	Data Link Layer	Mac address binding , error detection and correction capability
+7	Physical Layer	The physical layer is responsible for the physical cable or wireless connection between network nodes.
+
+first three layer are software layer and last three are hardware midlle one is heart
+reciever
+********************************************************************
+opposite to sender
+******************************************************************************************
+iptables -L -n (to check the iptables)
+
+Helm install
+************************
+~$ wget https://get.helm.sh/helm-v3.6.2-linux-amd64.tar.gz
+This will download the helm installer.
+Now unpack it using the following command
+tar -zxvf helm-v3.0.0-linux-amd64.tar.gz
+mv linux-amd64/helm /usr/local/bin/helm
+
+
+noskript/skript@o390
+12XL9-B Exide Xplore Bike Battery
+kubeadm join 10.5.0.5:6443 --token gyrnl7.nahj3n580qm3jbiw \
+        --discovery-token-ca-cert-hash sha256:7d25a11bb9ffb006399ff17777a2733abf9ca9419129c219ca590c0d55534270
+apt-get install kubeadm=1.21.0-00 kubelet=1.21.0-00 kubectl=1.21.0-00
+Noskript#123
+
+Select-AzSubscription -SubscriptionId "ec03d756-090e-4d9e-9cd3-1eac8d74f968"
+[Yesterday 11:45 PM] Luis Calvo Salas (Tek Experts)
+$bastion = Get-AzBastion -ResourceGroupName zebratest -Name zebratest-vnet-bastion
+Set-AzBastion -InputObject $bastion
+
+[Yesterday 11:48 PM] Luis Calvo Salas (Tek Experts)
+Select-AzSubscription -SubscriptionId "your_subscription_ID"
+
+52.247.65.156
+"91.0.4472.77"
+ADD your_ca_root.pem /usr/local/share/ca-certificates/foo.pem
+RUN chmod 644 /usr/local/share/ca-certificates/foo.pem 
+RUN update-ca-certificates
+
+https://noskript.azurecr.io
+noskript
+jtQ+ugRqgpK092wCiUFti9=y1MFrCT40
+elgalu/selenium
+ARG SEL_DIRECTORY="3.14"
+ENV SEL_VER="3.141.59"
+
+REQ0681703
+v1.23.4
+ "--hostname=preprod.cqm.noskript.com", "-
+ mosaic
+ 
+Familiarity with task orchestration tools such as MLflow, Kubeflow, Airflow,
+Vertex AI, Azure ML, etc.
+kubectl create secret tls zalenium --key live.apollo.noskript.com.key --cert ca_bundle_live.crt
+Username: aman_singh
+Temporary password: LcKYLDoShBd!
+(You can change your password in the Keycloak Panel)
+Download OpenVPN config 
+This login is for authorization in Jira, Confluence and GitLab
+Jira: https://jira.dagility.com/
+Confluence: https://confluence.dagility.com/
+Gitlab: https://gitlab.dagility.com/
+Please use your SSO login for authorization.
+Sincerely yours,
+PACE Application Team
+username - sa password - Database@o*390 localhost
+
+connecting to sdp portal mysql
+************************************
+ /opt/lampp/bin
+ ./mysql
+ show databases
+ use support
+ show tables
+ select * from mantis_user_table
+ update mantis_user_table set password=md5('vapt#123') where id=7;
+  15.1.2
+
+Crontab
+**************
+
+***** - left to right = min,hour,day of month,month,day of week
+
+Keycloak
+*********************
+registry.gitlab.com/noskript/keycloak:11 - working keycloak 12 version main one
+registry.gitlab.com/noskript/keycloak:15 - working keycloak 12 version it will have zebra realm
+registry.gitlab.com/noskript/noskript-main:keycloak39 - pre-prod keycloak
+registry.gitlab.com/noskript/noskript-main:keycloak40 - production keycloak
+
+
+To improve Database performance
+*********************************************
+SELECT * FROM sys.database_scoped_configurations
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 8;
+
+teams call
+******************
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MmJkMGFkODQtMmNkOC00N2QyLTk0MjktYTlhZjQ1NWU2MTcw%40thread.v2/0?context=%7b%22Tid%22%3a%2202aa9fc1-18bc-4798-a020-e01c854dd434%22%2c%22Oid%22%3a%22af29e6c4-550a-4b8a-aed7-ff1776068c4b%22%7d
+https://tdmportalweb.azurewebsites.net/scriptless/keycloak.json
+
+
+
+To change browsing
+***********************
+Then find the line: Options Indexes FollowSymLinks
+Change that line to: Options FollowSymLinks
+
+ Order allow,deny
+ Allow from all
+<LimitExcept POST GET>
+      Deny from all
+</LimitExcept>
+
+Strict check
+****************
+<VirtualHost www.example.com:80>
+Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
+</VirtualHost>
+
+Agile methodology
+************************
+Agile methodology is when we break down development into different different parts and independent parts so that every part can be developed 
+in parallel and provides to customer in short spam of time. this best for the project where there is no time limit
+recommended scrum call can max go up by 30 mints recommended by agile methodology
+Waterfall methodology
+****************************
+In waterfall methodology we will be able to break the development but it will be breaked in such way that we cannot proceed if we are not 
+completring first step every step is depend on every other step.
+this is best when we have fixed deadline.
+
+Pace username and Password
+*****************************
+Username: aman_singh
+Password: Dagility@o*390
+Link to change the password - https://keycloak.dagility.com/auth/realms/Edgeops-Dev/account/
+Link to download VPN - https://keycloak.dagility.com/auth/realms/Edgeops-Dev/account/
+Jira: https://jira.dagility.com/
+Confluence: https://confluence.dagility.com/
+Gitlab: https://gitlab.dagility.com/
+
+https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.0.25/xampp-linux-x64-8.0.25-0-installer.run
+
+Finding process and process ID in windows
+*******************************************
+netstat -ano | findstr port
+
+To kill the process
+***********************
+taskkill -pid id /f
+
+REQ0711573
+Access key - AKIAZ34SNDWOLCDS7H6P
+Secret access key - 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
+
+aws deploy push --application-name mywebpage --s3-location s3://codedeploydemobucketnewtem/WordPressApp.zip --ignore-hidden-files
+
+SonarQube
+**********
+bug free , secure , Dublication avoided
+static code analysis 
+Quality management tool like code analysis, Test Reports, Cover Coverage
+components of sonarqube -
+- Rules 
+- Database
+- web interface 
+
+SonarScanner - sonarscanner will scan your code lets say we have java code and we want to scan we can han sonarscanner ther and scan the code.
+sonarscanner will scan the code based on the rule available in sonarqube and generate the report report can be stored in sonarqube database.
+to run sonarqube for java application - mvn maven:maven -Dsonar.projectkey= -Dsonar.host.url= -Dsonar.login=
+
+once we run the scan 
+**************************
+issues 
+Rules
+Quality profile - collection of rules , we can create our own Quality profile and add the rule we can set the our profile as default.
+Quality gates - we can create a quality gates and based on that we can say it is passed or failed(coverage , Duplicate lines, Security hotspot, Security rating)
+Administrator
+
+Types 
+*********
+bug 
+vulerability
+Code smell
+security hotspot
+
+Java build + scan
+***********
+mvn clean package maven:maven -Dsonar.projectkey= -Dsonar.host.url= -Dsonar.login=
+build will fail if quality gate doesn't follow the condition
+
+for angular project
+***********************
+- npm install -D karma-sonarqube-reporter
+- plugin import -
+require('karma-jasmine-html-reporter'),
+require('karma-coverage-istanbul-reporter'),
+require('@angular-devkit/build-angular/plugins/karma'),
+require('karma-sonarqube-reporter'), // This one
+- npm install -D sonarqube-scanner
+- Create a sonar-project.properties file in your project root
+sonar.host.url=SONAR-QUBE-URL
+sonar.projectKey=Project_Key # Must be unique (Primary key)
+sonar.projectName=PROJECT_NAME # name that will be displayed on the dashboard
+sonar.projectVersion=1.0
+sonar.sourceEncoding=UTF-8
+sonar.sources=src
+sonar.exclusions=**/node_modules/**
+sonar.tests=src # Where to pickup test files from
+sonar.test.inclusions=**/*.spec.ts # only collect these for test-coverage
+sonar.javascript.lcov.reportPaths=src/coverage/PROJECT_NAME/lcov.info
+sonar.testExecutionReportPaths=reports/sonarqube_report.xml
+- npm run sonar-scanner
+
+Azure devops 
+*****************
+we can get the sonarqube from marketplace it is freely available
+afer mvn install we can add - prepare analysis on sonarqube (here we need to provide all the details , token generated from sonarqube portal, ids)
+- add run code analysis (keep as it is as it will have command to do scanning)
+- Publish Quality gate result 
+
+Blackduck
+*************
+Old version
+Bad Licence
+vulerability
+it can be used to contineously check the vulerability in your production instance and report the vulnerability to fix.
+
+In azure devops we can add the plugin Synopsys Detect to connect with black duck and do the scanning.
+To directly scan the java code we can pass values in application.properties file -
+blackduck.url="https://hostname.com"
+detect.maven.path="Maven/3.3.9/bin/mvnSynopsys"
+detect.force.success=true 
+detect.project.name="Myproject"
+detect.project.version.name="projectversion"
+blackduck.trust.cert=true
+detect.blackduck.signature.scanner.snippet.matching=SNIPPET_MATCHING
+detect.blackduck.signature.scanner.exclusion.patterns="excluded files"
+logging.level.com.synopsys.integration=INFO 
+blackduck.offline.mode=false   
+detect.output.path="scanDirPath"
+detect.maven.build.command="-Drepo.id=repopath -Dmaven.repo.local=mavenlocalrepo"
+blackduck.api.token=XXX
+
+To connect with blackduck and angular project
+************************************************
+npm install -s blackduck-api
+import { BlackDuckAPI, BlackDuckReports } from 'blackduck-api';
+const bd = new BlackDuckAPI('https://blackduck.company.com/api', 'your_api_token');
+node test.js  
+
+Fortify scan
+******************
+Fortify SCA is a static application security testing (SAST) offering used by development groups and security professionals to analyze the source 
+code for security vulnerabilities. It reviews code and helps developers identify, prioritize, and resolve issues with less effort and in less time
+
+Anchore - this is for security scaning
+
+firewall
+*************
+service iptables status
+service iptables start
+service iptables stop
+
+139-server username and password
+**********
+194356/Ay84Hb2n
+
+To delete the network from servers - kubernetes issue
+**********************************************************
+ip link set cni0 down && ip link set flannel.1 down 
+ip link delete cni0 && ip link delete flannel.1
+systemctl restart docker && systemctl restart kubelet
+
+AWS
+********
+678375005596
+
+Kubernetes 
+*************************
+secret values are encoded by default in kubernetes so if anyone want to see the value they can decode the value and see the value of secret
+echo value(encoded) | base64 --decode
+
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+name: newsetup
+resources: 
+        -resources:
+         - secrets
+         providers:
+         - aescbc:
+            keys:
+            - name: firstkey
+              secret: abcsgdhdgk
+         - identity: {}
+
+cp file /etc/kubernetes/pki/
+
+after this we need to tell the kubernetes to use the encrytion file to encrypt the data for that we need to go to -
+/etc/kubernetes/manifests/
+edit kube-apiserver.yaml and add line --encryption-provider-config=/etc/kubernetes/pki/filename
+
+this will encrypt the secret which we will create now but if we want to encrypt all the data which we created earlier what we can do is we can run below command-
+kubectl get secrets --all-namesapces -o json | kubectl replace -f -
+
+Pause container 
+****************
+pause container is the container that holds all the containers of a pod together also know as infrasture container
+pause container is always created before the main appcontainer
+if pause container stopped all the new container will get created and if only app container stopped iit will just recreate the app container 

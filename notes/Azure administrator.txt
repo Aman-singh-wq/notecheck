@@ -1,0 +1,291 @@
+IAM - Identity and Access management
+
+Regions in azure 
+**************************
+it is a physical data center
+
+Azure Resource Manager
+****************************
+export template - redeploy
+and deploy all the resources present in the resource group to another group with the json file
+ARM template
+
+
+Subscription
+*********************
+free
+pay-per-use
+Enterprise
+student
+
+Management group
+******************************
+Management group let you organize multiple subscription as single management entity to facilitate easier management
+you can create management group in a hierchical structure with the top level of the hierchichy at the tenant level and containing all subscription in that tenanant.
+Any conditions applied to a management group apply to all subscription contained in that management group object.
+Each management group or subscription can support only one parent
+Each management group can have many children
+The root management group can't be moved or deleted unlike other management group
+
+Azure Active Directory(Microsoft's cloud-based identity and access management service)
+*******************************************************************************************
+Tenants - Represents an organization
+Tenants is automatically created when your organization signs up for a microsoft cloud service subscription
+The Term tenants means a single instance of Azure AD representing a single organization
+The term Tenant and Directory are often used interchangeably
+
+Azure active directory(AD) and RBAC Role base access control
+**************************************************************
+AD roles are for Administrative role (Administrative role can be used to grant access to azure ad and other microsoft service)
+Asigned role - Active directory role
+Azure role assigment - this RBAC role
+RBAC role are for the resources present azure cloud
+
+Relationship between subscription,tenant,Active directory
+***************************************************************
+whenever we create azure account azure will create a tenant for you and active directory for you which contains users, group etc
+Tenant and Azure active directory has one to one relationship
+each subscription trust to single active directory
+
+Tags
+********
+we can write a tag to the resource and later we can filter the resources with tag
+we can create multiple tags to one resource
+
+Lock
+**************
+We can create a lock , read only means we will see the lock and preventing the change delete lock means noone will be able to delete
+Lock resouces cannot move to other resouces
+
+Azure policy
+*************************
+we can set the policy in azure saying that we can create only some configuration or so on
+
+Azure storage
+*******************
+Containers - blob means binary large object we cannot create container inside the container flat structure
+ Block blobs
+ Append blobs
+ Page blobs
+File shares - we can create directory inside the directory hierchical structure
+Queues
+Tables
+
+Azure storage
+************************
+Access keys - these keys can be used to to access the storage account.
+we can set the rotational reminder
+we can rotate the keys and also we will have total 3 keys
+
+
+We can restrict the access on network layer as well.
+
+Azure VM move to different resource group/subscription
+**********************************************************
+we can move the VM to different resource group/subscription but we have to move all the other resources assoiciated with VM otherwise it will fail.
+
+Azure VM
+**********************
+we can create disk for the VM and attach to the disk
+we can create a disk and can be shared across the multiple VM's
+
+Snapshot
+*******************
+we can create a snapshot of the disk and create another disk from snapshot and attach to another VM
+
+unmanaged disk
+********************
+we can created unmanaged disk for the VM which means we will be doing everything on the disk encrytion everythingazure will not do anything that we can
+create by going to disk tab click on advance and uncheck managed disk.
+
+We can save the cost in cloud by provisioning resource for 1 year or 3 year azure will provide discount as compared to pay as you go 
+
+Availability set 
+**************************
+we can create availability set and assign vm to the set after that it will microsoft resposiblity to keep in in the set.
+
+Scale set 
+******************
+here we can have monitoring and scaling at one place we don't need to do manually
+
+NIC is Network interface card
+*************************************
+NIC is (network interface) previous time we call network interface the wire we put on laptop port.
+nsg will be attached to Network interface
+we can add multiple NSG
+
+Route tables
+********************
+we can create route tables and move traffic according to our need.
+we can attach route table to network interface and subnet
+on server level of middle sever we can enable IP configurations
+
+Service endpoint in virtual network
+****************************************
+we can create service endpoint in azure to connect securely to the service from the service running in virtual network on azure backbone.
+example - VM we can access storage account in azure without going to internet
+
+Private endpoint
+*************************
+
+NSG
+****************
+NSG can be applied to network interface or subnet
+if nsg is on subnet level network interface is on vm level
+
+ASG(application security group)
+*********************
+we can create asg and assign vm's to asg and create nsg and assign it to asg
+how to add nsg to subnet
+how to use asg - we can create two asg assign to two different subnet and create nsg assign rules to both the subnet in nsg create a rule for asg
+how to Inbound NAT rule for rdp to non public IP vm
+Azure firewall
+**********************
+Azure firewall is very costly service 
+one example of azure firewall is let's say we have virtual network with vm and we don't have internet in it and also we want to secure completely so we
+we can use azure firewall here we can configure it we can attach azure firewall to subnet of the virtual network and allow the traffic through azure virewall
+and also we can block the internet network from vm and route traffic via azure virewall for that again we need to use route table and route traffic from VM
+to open internet via azure firewall.
+
+Load balancer
+***********************
+basic - to use vm for basic load balancer they need to be part of vm scale set or availability set
+if load balancer is basic the vm public IP should be basic or no public IP
+if load balancer is standard than vm public IP should be standard or no public IP
+standard loadbalancer - we can add any VM to backend pool
+outbound rule - this we can create in standard load balancer. with the help of outbound rule we can make outboundrequest for example let say we want to
+access internet from vm where no internet is availabile and vm is connected via loadbalancer than we can create outbound rule and make a request with
+the help of load balancer.
+
+Inbound NAT rule 
+**********************
+this we can use when we want to move traffic to particular VM for example we want to do RDP to particular VM we can route traffic to particular VM
+on 3389 port.
+
+IP's of two type
+************************
+basic and standard
+
+Network watcher
+*******************
+ip flow
+monitoring - we can set the alert or keep on checking the connectivity
+in network watcher we can see the security rule attached using effective security rule. we can get detailed information from NSG diagnostic
+when we create route table we can define our own flow and if we are facing any issue we can troubleshoot with the help of next hop
+If we want ot check each and every details  than we can use packet capture.
+
+Azure monitor
+*************************
+Activity logs can show all the activities happening in the subscription
+we can come to monitor and go to insight and check the all the details
+To see the resource log first we need to save the logs , to save the logs we need to use diagonostic setting.
+Activity log we can find directly on the resource level itself we don't need to enable anything.
+
+Backup
+*******************
+file recovery - it means if we have taken the backup of the VM and now we want to recover few files than what we can do is we can use file recovery oprtion.
+restory - we can use when we want to restore the backup it will create same virtual machine we are having or were having
+Mars agent - we can take a backup of specific file or folder with the help of mars agent(microsoft azure recovery services)
+lets say we want to take the backup of onprem vm , we can install the agent and take the backup and also restore
+ 
+service endpoint and private endpoint
+***************************************
+A Service Endpoint remains a publicly routable IP address. A Private Endpoint is a private IP in the address space of the virtual network where the private endpoint is configured.
+
+Application insights
+***************************
+Application Insights provides features of application performance management and monitoring live web application.
+
+Azure policy
+*******************************
+Azure policy can be used to -
+Audit compliance of resouces based on policy
+Enforce compliance based on policy
+we can check in azure policy if some resources are compliance non compliance and all.
+
+we can describe the azure policy on different scope like Managementgroup,subscription,resouce-group
+Azure policy have certain inbuild policies. like Azure security benchmark,
+
+Azure Monitor
+*****************
+Alert - we can create alert based on some conditon
+Action group - we can create a action group and from alert we can set it like trigger once we get that particular alert.
+we can generate an alert from activity log
+
+Alert rule - we will have scope like resource level than we will have conditions(we can select signal type and monitor service in codition) after this
+we have action where we can select what action to be performed.
+
+Log analytics workspace in azure
+*************************************
+we will have log analytics workspace in azure where we can add our azure vm or services or external VM's with the help of agent and store different types
+of logs.
+
+Azure policy
+********************
+we can define our own policy or use pre-defined policy -
+go to definitions - search for policy
+we can assign policy to subscription and than on particular resouce-group
+
+Azure Storage
+******************
+four types of storage-
+Blob storage - it is used to store unstructure data such as text or binary data(n number of container we can create - n number of blob we can create)
+File Storage - azure file share support LRS and GRS maximum size of file share is 5TB storage account -500tb of files - n number of share-n number of directory-n number of files
+Queue storage - here what we have is like we have one database and from multiple place we are getting request so we can use Queue storage to store the request and get executed one by one
+Table Storage - This is used for partially structured data or kind of Nosql data. Table - entity
+
+Azure Storage option -
+general purpose v1 - may not have latest features lowest cost. ex- cool and arhieve storage are not supported in general purpose v1
+Blob storage - all the latest features for block blobs, only support block blobs
+General purpose v2- support all the new feacture supports blob file queue tables
+
+for v2 we can select all storage services - blob files queue tables and make cool  hot and archieve
+block blob - cool  hot and archieve(achive mean we may use in later month) 
+Hot - frequesntly used
+Cold - less used within 30 days 
+Archive - very less used in 180 days
+cost calculated on storage
+**************************
+storage cost
+Data access cost
+Transaction cost
+Geo-replication data transfer cost
+
+The data in microsoft is always replicated to ensure durability and high availability
+when we create storage account we need to select replication option -
+Locally redundant storage - same zone atleast 3 copied
+Zone redundant storage - atleast 2 zone
+Geo-redundant storage -  in different area zone
+Read-access geo-redundant storage - only from here data can be read from different location 
+
+Vnet
+***************
+kind of cloud for you 
+subnet - mean logical partitioning
+routing
+
+*******************************************
+Storage account can be secure with RBAC and AD authentication 
+data can be set to be automatically encryten when writing to azure storage using storage service encrytion
+OS and Data disck used by virtual machine can be set to be encryted using azure disk encryption
+delated access to data object using shared access signatures
+
+Auto-scaling(types - vertical and horizontal)
+************************************************
+application can scale include vertical scaling and horizontal scaling. Vertical scaling (scaling up) increases the capacity of a resource, 
+for example, by using a larger virtual machine (VM) size. Horizontal scaling (scaling out) adds new instances of a resource, such as VMs or 
+database replicas
+
+Application gateway WAF(Web application firewall)
+****************************************************
+https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/ag-overview?WT.mc_id=Portal-Microsoft_Azure_HybridNetworking
+basic feacture to protect application from cross site scripting, SQl injection etc.
+
+Azure logic Apps 
+**********************
+To automate the multiple function in azure cloud. here we will have inbuild connectors.
+
+Azure function
+*******************
+here we need to write the code 
+

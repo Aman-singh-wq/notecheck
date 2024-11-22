@@ -1,0 +1,168 @@
+Variables in Terraform
+****************************
+variable.tf file 
+variable "instance_type" {
+   description = "Instance type t2.micro"
+   type        = string
+   default     = "t2.micro"
+} 
+
+resource file 
+
+resource "aws_instance" "ec2_example" {
+
+   ami           = "ami-0767046d1677be5a0"
+   instance_type =  var.instance_type
+
+   tags = {
+           Name = "Terraform EC2"
+   }
+}
+
+We ususally use variable.tf file to define the variable so that we can manage the values with the help of variable 
+
+Variable.tf and terraform.tfvars
+***********************************
+Here we already have variable.tf but we use terraform.tfvars to keep the values for different different environment like if we have written scrips for test,stage
+production environment and we want to pass the value for stage prod and test seperately than we can use terraform.tfvars here we will define variable
+in variable.tf file but actual value we will pass from terraform.tfvars file.
+
+variable.tf
+variable "instance_type" {
+   type = string
+   description = "EC2 Instance Type"
+ }
+
+ # No default value
+ variable "tag" {
+   type = string
+   description = "The tag for the EC2 instance"
+ }
+
+ # default value for the variable location
+ variable "location" {
+   type = string
+   description = "The project region"
+   default = "eu-central1"
+ }
+ 
+terraform-dev.tfvars
+ 
+ instance_type   =   "t2.micro"
+ tag             =   "EC2 Instnace for DEV"
+ location        =    "eu-central-1"
+
+
+Output
+*************
+To print the console output we can use output
+output "instance_ip_addr" {
+  value = aws_instance.server.private_ip
+}
+
+This will show output like this -
+instance_ip_addr = Ip(private)
+
+Dynamic Block
+*******************
+locals {
+  ingress_rules = [{
+    port = 443
+	description = "to allow the traffic on 443 port"
+	},
+	{
+	port = 22
+	description = "to access the server over ssh"
+	}]
+	}
+dynamic "ingress" {
+   for_each = local.ingress.rules
+   content {
+     description = ingress.value.description
+	 from_port = ingress.value.port
+	 to_port = ingress.value.port
+	 protocol = "tcp"
+	 cidr_blocks = ["0.0.0.0/0"] 
+	 }
+}
+
+Modules 
+***********
+we can create resources into one folder it may include variable as well and we can reference the folder in our main main.tf file and also pass the variable 
+in main.tf file which module will be taking.
+
+module "new-virtual-machine" {
+  source = ".//anotherVM"
+  zone = "us-central1-c"
+}
+
+Here zone the variable which module is expecting
+
+Terraform workspace
+************************
+terraform workspace list
+terraform workspace new workspacename
+terraform workspace show
+terraform workspace select nameofworkspace
+
+terraform.workspace this is used in script to get the workspace name.
+we can manage different environment with the help of single script.
+when we delete from dev workspace it will delete only dev resources
+
+Terraform state
+*********************
+once we run terraform apply command than terraform state file will get created
+
+To store the terraform state file remotely we can use -
+terraform {
+  backend "s3" {
+    bucket = "name"
+	key = "name"
+	region = ""
+	}
+}
+
+Terraform state pull - this will take the latest state file or this will update your local state file if anything updated.
+
+Terraform Datasources
+*************************
+
+
+Validation
+****************
+we can add validation condition for the value to be added in terraform
+
+Version manager
+********************
+tfenv can be used to manage terraform versions
+
+Store credential in safe location
+
+Null resource
+******************
+This Null resource will not setup anything in our cloud.
+resource "null_resource" "can_give_any_name" {
+  triggers = {
+    id = aws_instance.ec2_example.id
+	}
+  provisioner "local-exec" {
+    command = "echo hello world"
+	}
+}
+
+in null_resource we must define some sort of provisioner here we are using local-exec. 
+use cases of nullresource - Execute commands, Run shell script, Run Ansible Playbook, Run python program
+what this trigger will do is it will execute the provisoner whenever the condition met inside the trigger
+
+Null resource will executed only for the first time of apply command after first time it will not execute when we run terraform apply command. to 
+make it run we need to use Trigger and make the confition true everytime so that it execute everytime as when the confition is true.
+
+Terraform Import
+***********************
+Terraform import resourcenametype.local-name0f-resource-given resourceNameWhichIsCreatedInCloud
+
+if we created manually some resources in cloud and we want to import in terraform than what we need to do is we need to create a resource in configuration
+file manually with updated details after seeing in cloud and run terraform import 
+
+once terraform import command rain successfully we can run terraform plan command to see if it actually got imported properly and values which we updated 
+in our configuration/tf file is correct. this is just for the verification 

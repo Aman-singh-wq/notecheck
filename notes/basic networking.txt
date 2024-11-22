@@ -1,0 +1,282 @@
+192.10.10.0
+we have 2 router and we need to connect 30 system in one subnet, 20 system in one subnet, 10 system in one subnet, 4 system in one subnet and 2 is required between the two router.
+
+now we have 30system maximum
+2 to the power n -2 >= 30
+n=5
+192.10.10.00000000
+192.10.10.11100000
+it is class c ip so 255.255.255.0 is default subnet
+after doing subnetting it will be 255.255.255.224
+
+now first one from left is at 5 so 32
+192.10.10.0
+192.10.10.31 - broadcast
+
+192.10.10.32/27
+
+now we have 20
+2 to the power n -2 >= 20
+n=5
+192.10.10.00000000
+192.10.10.11100000
+it is class c ip so 255.255.255.0 is default subnet
+after doing subnetting it will be 255.255.255.224
+
+now first one from left is at 5 so 32
+192.10.10.32
+192.10.10.63 - broadcast
+192.10.10.64/27
+
+now we have 10
+2 to the power n -2 >= 10
+n=4
+192.10.10.00000000
+192.10.10.11110000
+it is class c ip so 255.255.255.0 is default subnet
+after doing subnetting it will be 255.255.255.240
+now first one from left is at 4 so 16
+192.10.10.80/28
+
+now we have 4
+2 to the power n -2 >= 4
+n=3
+192.10.10.00000000
+192.10.10.11111000
+it is class c ip so 255.255.255.0 is default subnet
+after doing subnetting it will be 255.255.255.248
+now first one from left is at 4 so 16
+192.10.10.80/28
+
+Fully qualified domain name
+**********************************
+it means we will be mentioning the root server path in domain name which we generally don't use(if at the end it is . means it is fully qualified name)
+
+partially qualified name
+***************************************
+it means we will not be mentioning the root server path in domain name which we generally don't use(if at the end there won't be any .)
+
+TCP/IP model
+***************************************
+
+
+OSI- open system inter connection
+******************************************
+total 7 layer
+sender - application,presentation,session,Transport,Network,Data link, physical
+reciever - it will be opposite to sender
+application layer - http, ftp, telnet
+Presentational layer - encryption/decryption
+session layer -
+Transport Layer-
+Network Layer-
+DataLink Layer-
+Physical Layer-
+
+Dns 
+*********************
+yum install bind*
+systemctl enable named-chroot.service
+systemctl enable named.service
+systemctl start named-chroot.service
+systemctl start named.service
+
+/var/named/chroot/etc/named.conf - file
+/etc/resolv.conf
+
+IPv6 concept
+*********************
+it will be in 8 segment and each segment will have 4 number means 16 bits
+128 bits ip address
+Rule 1 -> if two block contains consecutive zeroes Omit them all and Replace with double ::
+ffff:cdef:a890:0000:0000:f000:00a8:ad00
+we can write it like 
+ffff:cdef:a890::00a8:ad00
+ffff:cdef:a890:0000:0000:0000:00a8:ad00
+ffff:cdef:a890::00a8:ad00
+ffff:0000:0000:feab:0000:0000:0000:ad00
+ffff:0000:0000:feab::ad00
+
+Remove leading zeroes
+**********************
+00ff:0000:0000:0e00:0000:0000:0000:00ad
+00ff:0000:0000:0e00::00ad
+ff:0000:0000:e00::ad
+
+if there are multiple places where "::" can be used , and the numbers of zeroes are the same , use"::" on the leftmost set of zeroes
+00ff:0000:0000:0e00:0000:0000:adef:00ad
+00ff::0e00:0000:0000:adef:00ad
+ff::e00:0000:0000:adef:ad
+ff::e00:0:0:adef:ad
+
+Notes for ipv6
+- it is made up of 128 bits, divided into eight 16 bits segments or block.
+
+classes
+No Broadcast
+Backward Incompatible
+hexadecimal - 0123456789ABCDEF
+to create hexadecimal-
+0 0000
+1 0001
+2 0010
+3 0011
+4 0100
+5 0101
+.
+.
+F(15) 1111
+0,0,0,0 (whichever one we used we need to make it one )
+1,2,4,8 (we need to add values and create )
+
+unicast - unicast refer to a single 
+
+Multicast - it can be used to deliver a package to a group of destination. Any packet sent to a multicast address will be delivered to every host 
+that has joined that particular group.
+range - FF02::1/8 - here it means first 8 bit are fix we cannot change other we can use for multicast
+
+Anycast - The anycast address is very similar to the multicast Address 
+Assigning a unicast address to more than one interface makes a unicast address on Anycast address. packet sent to anycast address is delivered to 
+closest inerface.
+must not be assigned to host it is for router
+
+Types of Unicast Address
+**********************************
+Global Address - public IP - address 2000::/3 (it means three bits are reserver and other we can change )
+
+global routing prefix , subnet ID , Interface ID
+48	,                     16,         64
+
+Link Local Address
+****************************
+Automatically generate for each IPv6 network
+range - FE80::/10
+
+Unique address
+******************************
+prefix -FC00::/7
+ that is valid within a site or organization or between a limited number of sites.
+ Not routable to the internet
+ FC00 globalID SUBnet ID Interface ID
+     48bits        16bits     64bits
+	 
+	 
+How to make inerface ID 
+************************************
+The second half of the address (last 64 bits) is always used for Interface ID. MAC address is unique 48 bits hexa decimal format
+Interface ID take advantage of this MAC address feacture host divided MAC address into 24bits Halves. then insert 16 bits hex value FFFF between these two 
+halves
+ex of -MAC (by default come with new system)
+00 11 22 AB CD EF
+to create interface id
+00 11 22, ff ff ,AB CD EF - extended unique interface
+convert first two bit to binary and complement the 7 bit
+0000 0000
+0000 0010
+021122ffffABCDEF - this is the final outcome
+
+Trasition between IPv4 to IPv6
+*****************************************
+::1/128 - is a loopback address in ipv6
+::ffff:0:0/96 are the ipv4 mapped address
+fe80::/10 are the link local unicast address
+::/0 is default route
+2001:db8::/32 are the documentation address
+FF00::/8 are multicast address
+::/128 is unspecified address
+
+
+here first 24 bit is for vendor ID and last 24 unique Device ID/NIC ID
+0000.0000.00000.0000.0000.FFFF.0000.0000
+
+last two are for IPV4
+lets say we want to convert ipv4 to ipv6 than 
+first we need to convert the ipv4 to hexa decimal and write it in below format
+
+0000.0000.00000.0000.0000.FFFF.ipv4
+
+three methods to do Trasition -
+Dual stack router
+NAT Protocol Translation
+Tunneling
+
+Dual stack router - 
+A router can be installed with both ipv4 and ipv6 address configured on its inerface pointing to the networkof Relavent IP address
+so now a days system will have both ipv4 and ipv6 so when we make a request it will go to dns server and checck if the ip is ipv4 request will go with
+ipv else it will go with ipv6
+
+
+Tunneling
+******************
+it means if two system want to communicate with ipv4 and ipv6 than the request will go according to destination system if it is ipv6 and source one is 
+ipv4 than ipv4 will cover with ipv6 cover and route it to destination server get all the data back in ipv4 and response to source system. and same for ipv6
+
+most secure network as it will have two layers 
+
+NAT Protocol Translation
+******************************
+here we can use one device NAT pt which will translate the packet according to source and destination system.
+
+IPv4 Header
+**********************
+it will have 12 field 
+20 bytes ipv4 header(minimum) we can increase using optional it will go to 40 
+maximum 20+40 = 60 
+version(4) IHL(4) TOS(8) Total_Length(8) (bits)
+Identifier(16) Flags(3) Fragment_offset(13) (bits)
+TTL(8) Protocol(8) Checksum(16) (bits)
+  Source_address(32) (bits)
+  Destination_address(32) (bits)
+  option(0-40bytes) (bits)
+
+above is the structure of ipv4 header
+version - version number of internet protocol
+IHL - internet header length
+Type of service - request router high throghput , low latency depends whatever we will request
+Total length - Length of entire IP packet
+identifier - it will identify all whichever will get broken due to router limitation and transmitted
+Flags - 1 means not fregmented it means you will be able to divide, 0 fregmented it means you won't be able to divide the packet
+Fragment_offset - this will sequence the bits which we distribute to pass the packet. exact position of fragment 
+Time to leave - for how much time it will take to move the packet if it will take more time it will discard
+protocol -type of protocol TCP UDP etc/named
+checksum - it will check the thing let's say if there is somechange in header than it will discard the packet.
+source Ip - From where we are sending the request
+Destination IP - WHere we are trying to reach.
+
+
+IPv6
+******************************************
+version(4) Traffic class(8) flow label(20)
+payload length(16) Next Header(8) Hop Limit(8)
+source address(16 bytes)
+Destination address(16 bytes) 
+
+ipv6 = 40 bytes
+Traffic class - treat the data accordingly lets say if it is voice call than even if there is some packet loss it is ok but that should not happen when we
+are sending pdf so it will make sure of these kind of things
+Flow Label - it will hep router to allow the packet to pass as all will have same flow value
+Payload - the length of data which is being send with header
+Next Header - which protocol packet is using like TCP UDP etc
+Hop limit - ii is like time to leave in ipv4 it will send the traffic and check for specific time and if it will not able to process it will discard the 
+packet.
+
+SMTP
+*****************************************
+It is a application layer protocol
+It is for sending the mail
+pop3 IMAP - it is for reciving
+
+
+TCP/UDP
+************************************************************
+UDP is connectionless protocol you won't get acknowledgement
+TCP will make a connection do a transmission
+udp example - voice call as if some packet will get drop won't impact much but it will be fast
+
+WIFI
+***************************************
+802.11b/g/n/ac -this is the latest wifi
+
+
+
+

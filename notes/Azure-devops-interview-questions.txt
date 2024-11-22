@@ -1,0 +1,251 @@
+Azure Devops 
+******************
+It is launched in 2018
+
+Azure boards
+*********************
+organization setting -> boards -> process(we can select the process which we want to use in our project)
+If we want to customize the process what we can do is we can first inherit the process and that inherited process we can edit.
+basic process
+******************
+Users can be aaded from organization settings -> users -> Add
+Users can be added from project as well got to project setting -> user
+we can create multiple teams - project setting - teams -> new team
+project setting -> team configuration -> here we can update the configuration for the team (we can add sprints from iteration tab)(from general tab we 
+can add and remove the epic ,featurefrom the board and give configuration according to our need)(templates is for creating the new work item as per 
+our need)(areas-Select the areas your team owns below. The selected area paths will determine what shows up on your team's backlog and what work items your team is responsible for)
+
+Epic -> n(issues) -> n(Task) (all item can have ToDO,Doing,Done)
+
+In agile -> Epic - feature - user story - task(all item can have new,active,resolved,closed)
+For issue tracking - issue
+Bug -> task
+
+azuredevopsdemogenerator.azurewebsites.net - this is he website in azure which we can use to create project
+
+Boards - In boards we can select the color for the different epic,feature or story and give as per our need from the setting tab
+
+environment 
+*****************
+this can be used for deploying the code - here we can use AKS or virtual machines to do the deployment in environment to connect to external resources
+we don't need to create a service connection or specify in the pipeline as the external resources are already connected with the help of environment.
+
+Release pipeline 
+**********************
+we can enable contineous integration or disable , we can add pull request trigger like if any one commit the code pipeline will get trigger.
+on stages we can set the trigger it could be manual trigger,after release
+in after release we can schedule it , we can enable gate, predeployment approval , we can set the queue settings as well.
+
+Library
+***********************
+we will have variable group which we can use across the pipelines
+secure files- we can secure the files as well like certificates or sensitive files
+
+Task group
+****************
+we can create a task group it is used when we have certain common steps in pipeline we can create and refer in the pipeline instead of creating for 
+each pipeline.
+
+Deployment group 
+************************
+we can create a deployment group which will have release pipeline agents and we can refer in release pipeline
+
+Artifact
+***************
+we can create the feed based on our need like maven, npm etc and connect to it with the configuration provided by azure
+universal packages - you can store different types of packages other than the widely used ones such as NuGet, npm, Maven, or Python packages and upload
+and download using command line.
+
+Repos 
+************
+go to branches click on three dots and click on branch policy and set the policy according to your need we can set the reviewers and all
+project setting - repos - repositories - policies (here we can define the policy)
+
+Service connection in azure devops
+***************************************
+service connection - this we can use to connect to external services
+service hooks - this we can use when we want to trigger something to external application from azure devops
+
+To add a pool in azure devops 
+*****************************
+go to project setting - pipeline - Agent pools
+
+Self hosted Agent in azure devops
+*************************************
+download the tar file in linux server 
+extract the file
+run ./config.sh
+than run 
+./svc.sh install username - this will run the agent as a service 
+./run.sh - this is for running the agent interactively
+
+Yaml pipeline
+*********************
+trigger
+ - master
+stages 
+  stage
+    jobs
+	  tasks
+	    task
+		  jobs
+		    job
+pool
+ - we can define which pool to use
+environment -
+ - this will define which environment to use
+ 
+stages -> stage -> jobs -> job1 -> steps -> step -> Task
+
+stage - build , release
+Job - Agent1,Agent2
+Steps - Step1(step:task1,step:task2),Step2(step:task,step:script)
+
+Yaml pipeline
+**********************
+name: sampleWeb_$(Date:yyyyMMdd)$(Rev:.r)
+trigger:
+- main
+jobs:
+- job: ActivityonLinux
+  pool:
+   name: default
+  steps:
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
+- job: ActivityonWindows
+  pool:
+   name: Default
+  steps:
+   - task: PowerShell@2
+     inputs:
+       targetType: 'inline'
+       script: |
+         # Write your PowerShell commands here.
+         
+         Write-Host "Hello World"
+
+name: string # Define Custom Build number/Name
+variables: #Define variable for Pipeline 
+trigger: trigger/none #it defines which branch to enable for CI
+stages:[stage| templateReference ]
+  jobs:[job| templateReference ]
+    steps:[script | task | templateReference ]
+
+To debug azure pipelines
+******************************
+we can either use  system.debug=true or we can enable system diagnogtic
+
+ssh key and personal access tokens
+******************************************
+While SSH keys can be read-only or read-write enabled, or scoped to specific repositories, personal access tokens do have an edge in terms of their finer-grained permissions model in comparison. This is likely why GitHub recommends tokens over SSH keys.
+
+Epic - story/task -subtask
+
+/usr/local/tomcat/bin
+/usr/local/tomcat/webapps
+
+Permission in on project level Azure Devops
+***************************
+build administrator
+contributor
+endpoint creator
+endpoint administrator
+Project Administrator
+Reader
+Release Administrator
+
+Permission on organization level
+*****************
+Project collection Administrator
+Project collection build Administrator
+Project collection build service Account
+
+Agile and waterfall
+***********************
+Agile - plan -> Develop -> deploy -> Test  -> maintenance
+The main difference is that Waterfall is a linear system of working that requires the team to complete each project phase before moving on to the 
+next one while Agile encourages the team to work simultaneously on different phases of the project.
+-> Waterfall works best for projects completed in a linear fashion and does not allow going back to a prior phase.
+-> Agile focuses on adaptive, simultaneous workflows. Agile methods break projects into smaller, iterative periods.
+-> Kanban is primarily concerned with process improvements.
+-> Scrum is concerned with getting more work done faster.
+
+Kanban and scrum
+********************
+Kanban works as a fan-in and fan-out process where the team pulls user stories from an intake board and funnels them through a 
+workflow until they are marked done.
+But many organizations implement scrum, which organizes the work in cadences called sprints, usually lasting one or two weeks.
+
+ssh keys and tokens in azure
+************************************
+While SSH keys can be read-only or read-write enabled, or scoped to specific repositories, personal access tokens do have an edge in terms of their 
+finer-grained permissions model in comparison. This is likely why GitHub recommends tokens over SSH keys.
+
+schedule in yaml file
+*****************************
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - main
+	
+variable
+*************
+variables:
+- name: one
+  value: initialValue
+  
+variables:
+  global_variable: value    # this is available to all jobs
+  
+Pipeline
+********************
+variables:
+  global_variable: value    # this is available to all jobs
+
+jobs:
+- job: job1
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    job_variable1: value1    # this is only available in job1
+  steps:
+  - bash: echo $(global_variable)
+  - bash: echo $(job_variable1)
+  - bash: echo $JOB_VARIABLE1 # variables are available in the script environment too
+
+- job: job2
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    job_variable2: value2    # this is only available in job2
+  steps:
+  - bash: echo $(global_variable)
+  - bash: echo $(job_variable2)
+  - bash: echo $GLOBAL_VARIABLE
+ 
+Variable group
+****************
+variables:
+- group: "Contoso Variable Group"
+- name: va
+  value: $[variables.a]
+- name: vb
+  value: $[variables.b]
+- name: vcontososecret
+  value: $[variables.contososecret]
+  
+Key-vault
+*****************
+steps:
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'Your-Azure-Subscription'
+    KeyVaultName: 'Your-Key-Vault-Name'
+    SecretsFilter: '*'
+    RunAsPreJob: false
+	
+
+

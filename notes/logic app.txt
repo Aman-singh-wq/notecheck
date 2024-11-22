@@ -1,0 +1,62 @@
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODdjNmIyNGUtNDIzMy00Yzc1LWIyNmQtNDAzZjA5ZDhkMDQx%40thread.v2/0?context=%7b%22Tid%22%3a%222a6e6092-73e4-4752-b1a5-477a17f5056d%22%2c%22Oid%22%3a%2210301387-6ce0-405f-84c6-9c2d2a74a1ae%22%7d
+Thrusday 8pm
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MzU5YmNkNzItNWVlNy00YjZiLWE5MmItNTEwOTYzODYwZDE2%40thread.v2/0?context=%7b%22Tid%22%3a%222a6e6092-73e4-4752-b1a5-477a17f5056d%22%2c%22Oid%22%3a%2210301387-6ce0-405f-84c6-9c2d2a74a1ae%22%7d
+ms graph api - if there any is any mail - 
+service bus 
+office 365 connection
+graph api - response - if more than one email unread
+graph api - url along with payload
+email body structure which we need to keep in service bus
+
+stateful workflow - state are stored into some storage
+stateless workflow - state are not stored into some storage, good for light weight
+
+standard logic app - we can create multiple workflow in single logic app
+consumption - here we can create only one workflow
+Build In connector - build in connectors are the connector which is provided by azure for free to use in logic app. connector under azure are third
+party connector and we may get charge for using those connector in logic app.
+How to use managed identity
+*************************************
+Enable managed identity go to another app go to access control and add access and search for managed identity name in servicePrincipal.
+9410550980
+
+{
+  "@odata.context": "url",
+  "@odata.etag": "tag",
+  "id": "valueofID",
+  "createdDateTime": "date",
+  "lastModifiedDateTime": "date",
+  "changeKey": "keyvalue",
+  "categories": [],
+  "recievedDateTime": "Date",
+  "sendDateTime": "Date",
+  "hasAttachments": false,
+  "internetMessageId": "id",
+  "subject": "subjectofmail",
+  "bodyPreview": "value",
+  "importance": "normal",
+  "parentFolderId": "id",
+  "conversationId": "id",
+  "conversationIndex": "indexvalue"
+}
+
+\ =#
+
+Your MMC username 	U1327044
+Your Windows Domain	GCEUADDOMAIN
+Employee ID	1327044
+
+https://learn.microsoft.com/en-us/dotnet/api/overview/azure/messaging.eventhubs.processor-readme?view=azure-dotnet
+
+APIM
+**************
+Throtling - here we can define the number of hits to api in a min.
+Products - we can create product so that we can assign different policies in it and all the policy get attached to all the api which are in the product.
+user - we can create user and assign the user to product.
+Revision - here we can keep the updated version of API
+Version - we can have only one revision online at a time but we can have multiple version online at a time.
+
+We can enable or disable the CORS policy. we can allow specific methods in it upto us.
+
+LTIM Rhythm
+https://www.youtube.com/watch?v=4Sp2Qvmg6j8&t=1021s

@@ -1,0 +1,504 @@
+AKS latest version
+****************
+1.23
+
+Kubernetes latest version 
+*************************
+1.26
+
+Azure AKS
+*********************
+DNS name prefix - with this we will be connecting to the cluster
+vm scaleset is for scaling 
+
+we can have private cluster so if it is private cluster in advance network we can select networking and all 
+
+when we will create a cluster by default azure will create a resource group additional two and total three
+one is MC_nameOfClusterNameOfourResourceGroup - here we can see the pool and nodes we can do scaling and all 
+one is the one which we gave
+Another one is default - here if we give log analytic it will create the container under this resource group
+
+AKS cluster login with azure cli 
+********************************************
+az aks get-credentials --resource-group ResourceGroup --name AksCluster (this one will generate .kube/config file and it will be used by developers)
+az aks get-credentials --resource-group ResourceGroup --name AksCluster --admin (this one will generate .kube/config file and it will be used by administrator)
+
+code . (this will open the powershell)
+az aks browse --resource-group ResourceGroup --name AksCluster (this will ask for token you can give token and it will open the dashboard)
+
+Kubernetes
+************************
+Master Node and worker Node
+In Master node we will have ETCD cluster which have all the info 
+Kube scheduler to schedule the pods to worker nodes
+Kube controller to add or remove the node - Node controller -for nodes , replication controller - to check the number of replicas
+Kube api server - which will do all the stufff pass all the details to cluster and end user, orcgestrating all operation happening with in the server
+
+Worker Node - kubelet - which will listen the instruction from kube api server and send the response back 
+kube-proxy - this will enable the communication with in the server for the services
+
+ETCDCTL is the CLI tool used to interact with ETCD
+*************************************************
+etcdctl snapshot save 
+etcdctl endpoint health
+etcdctl get
+etcdctl put
+
+kubernetes YAML file 
+*******************************
+apiversion:
+kind:
+metadata: meta data will have what kubernetes expect
+  name:
+  labels:
+     it can have any value 
+
+spec:
+
+Namespace
+***********************
+By default kubernetes will have 3 namespaces 
+kube-system, Default, Kube-public
+we can connect to different namespace pod from another namespace pod by mentioning the namespace name.
+
+nodeName: NameOfNode - this will help to schedule particular pod to that particular node 
+
+Taint and Toleration
+*******************************
+Taints set on node
+Toleration set on pods
+kubectl taint node nodename keyname=value:Effect - this command is used to create a taint
+kubectl taint node nodename completetaintshowsindecribecommand-
+
+Node Affinity Types
+*******************************
+requiredDuringSchedulingIgnoreDuringExecution - it means if that kind of configuration not get the pod scheduler will not get schedule it is required.
+prefferedDuringSchedulingIgnoreDuringExecution - it means if that kind of configuration not get the pod scheduler will get schedule to another node it is just a preference.
+
+Resource Requirement and limit
+****************************************
+By default kubernetes thing .5cpu 256mi memory is required to run the container
+in pod cpu limit is limited pod can utilize maximum  to limit cpu beyond that it cannot go 
+in case of memory it can consume more than limit but if it is consuming constantly above that than it will fail
+
+Daemon
+*******************************
+Daemon set will make sure that atleast one copy of the node is there on each node
+
+static pods 
+**************************
+pods which can be managed with in the worker nodes no need of cluster or master node to intervent , kubelet can manage by its own.
+while installing the kubelet service on a node we can give the path of manifest folder and we can keep pod.yaml file as it understand only pod.yaml files.
+
+to identify the static pod like we will have node name append in the pod name.
+we can check the yaml file of pod it will show the details in owner section. kind will be node
+
+Multi container 
+************************
+when we run multiple container inside the same pod
+
+Init container 
+***************************
+these type of container will finish thr job and stop after finishing all the activity.
+
+If node is for maintenaince we can remove all the pods from the node -
+kubectl drain nodename --ignore-daemonsets
+
+kubectl get nodes - this will show the nodes
+status would be Ready,SchedulingDisabled state as we remove all the nodes.
+
+After maintinance we can bring that node to normal state 
+kubectl uncordon nodename
+
+Version upgrade 
+***************************
+major minor patches
+v19:11:3
+we can upgrade the master node directly as if it went down we will be able to service from our worker node so master node upgrade we can directly do.
+To upgrade worker node we first need to drain mark as unscedulable and than upgrade 
+Another way to upgrade is we can add new node with updated version and remove old version node after adding same amount of new version node.
+
+Backup and restore
+**************************
+kubectl get all --all-namespaces -o yaml > all-deploy-services.yaml
+this will get all the resource yaml file as cluster backup
+
+or 
+
+we can create backup of etcd database so what we can do is we can keep the bakup of the etcd location we will be configuring location while running etcd so we 
+we can take that directory backup.
+
+or 
+
+etcdctl is a command line client for etcd
+we can take backup with the help of etcdctl
+
+certificates
+**********************
+private keys are the one containing key in thr name
+public keys are the one which are not having the key in thr name
+
+curl urlofapiserver --key path --cert crtpath --cacrt signedcrt
+
+To view the certificate
+********************************
+openssl x509 -in pathofcrt -text -noout
+
+config file  - with the help of this we will we mentioning the cluster access context means command and users means what user access we will have in that cluster
+*****************
+apiVersion:
+kind:
+clusters:
+
+contexts:
+
+users:
+
+API Groups
+********************
+curl http://localhost:6443 -k
+There will be multiple groups
+
+Authorization
+************************
+Node
+ABAC
+RBAC
+Webhook
+Always Allow
+Always Deny
+
+In kubeapi server there will be one parameter in yaml file --authorization-mode by default it will be Always allow we can give the name whom it should 
+authenticate like Node ABAC RBAC and Webhook
+
+RBAC
+***************
+These we can use to restrict the user to namespace resources
+create a role yaml file where we can mention all the roles kind: Role
+create a rolebinding yaml file where we can bind the roles to particular user kind: RoleBinding
+kubectl get roles
+kubectl get rolesbinding
+kubectl describe role rolename
+
+To check the permission with user 
+kubectl auth can-i create deployment --as dev_user(username)
+
+To restrict the cluster scoped resources we can use this can be used to restrict the namespace resources as well-
+ClusterRole
+ClusterRoleBinding
+
+Network Policies
+***************************************************
+lets say we want to isolate one pod from every other pod and all from only one pod than we can use Network Policies
+apiVersion:
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelctor:
+    matchLabels:
+      role:nameOfThePodWhereWeAreApplyingLikeDbPod
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: api-podnamefromwhichingressisallowed
+    ports:
+    - protocol: TCP
+      ports: 3306
+  egress:
+  - to
+    - ipBlock:
+           cidr: 192.1.5.10/32
+    ports:
+    - protocol: TCP
+      ports: 80
+
+Storage Class
+****************************************************
+pv - persistant volume here it means we will create a storage and with the help of pv we will get it from the storage this is static process
+PVC - persistant volume claim will claim the volume from the persistant volume 
+
+we have StorageClass type where it works in a dynamic way it will connected to storage provider and based on PVC it will get the space and assign to PVC so it
+is dynamic in nature.
+
+Network
+****************
+Route command will show all the routing rules
+ip route add ip/subnet via ip - this we can use to connect or add in the route of the linux server ip/subnet is destination server ip and subnet ip is router IP
+ip route add default via routerIp - so any traffic will go via a router
+
+by default the forward traffic from one server to other to other is false to enable that we need to change the content of /proc/sys/net/ipv4/ip_forward to 1
+by default it will be 0 and also make change in /etc/sysctl.conf (net.ipv4.ip_forward = 1)
+ip link - to list and modify the interfaces on the host
+ip addr - to list the ip address assigned to those interfaces
+ip addr add 192.168.0.0/24 dev eth0 - to set ip address on the interfaces
+
+DNS
+*********************
+All server will have /etc/resolve.conf file where where have dns server entry
+/etc/hosts - here we can add host to resolve by the server 
+8.8.8.8 - this is google server resolver
+ip netns add namespace - this command is for creating network namespace 
+ip netns exec namespacename ip link (with the help ip netns exec command we can execute commands inside the namespace )
+ip netns - this will show the namespace
+ip -n namespaceid link - it will show where it is linked
+
+CNI Container Networking Interface
+***************************************
+kube api server listen on 6443
+kubelet listen on 10250
+kube scheduler run on 10251
+kube control - 10252
+etcd - 2379
+etcd client - 2380
+
+In kubelet service we can check the network plugin 
+--network-plug=cni
+--cni-bin-dir=/opt/cni/bin
+--cni-conf-dir=/etc/cni/net.d
+/opt/cni/bin - hdni
+/etc/cni/net.d - from here kubelet find which plugin to use and if multiple plugins are available here it will select by alphabateic order.
+
+for service ip kube-proxy will get the ip address and creates a forwarding rules
+
+DNS in kubernetes
+************************
+kubernetes will install domain manager in a cluster and we can access the application with the name of service+namespace+type+root
+normally if we keep the service in namespace than we have to access with http://service.namespace.type.cluster.local - this will be the complete name
+service - service name
+namespace - namespace name
+type - service or anyother
+cluster.local - means with in the cluster
+kubernetes dns server name is kube dns
+
+Ingress
+*****************************
+First we need to create ingress controller and mount it to specific service 
+than we can create ingress including rules and path
+single rule -
+apiVersion: extentions/v1beta1
+kind: Ingress
+metadata:
+  name: nameofingress
+spec:
+  rules:
+  - http:
+      path: /wear
+      backend:
+        serviceName: nameoftheservicewhereitshouldpoint
+        servicePort: portnumber
+      path: /watch
+      backend:
+        serviceName: nameoftheservicewhereitshouldpoint
+        servicePort: portnumber 
+
+here if you will see we didn't mention hostname it means whatever request come it will come to this rule and than path
+apiVersion: extentions/v1beta1
+kind: Ingress
+metadata:
+  name: nameofingress
+spec:
+  rules:
+  - host: name.com(hostname)
+    http:
+      paths:
+      - backend:
+          serviceName: nameoftheservicewhereitshouldpoint
+          servicePort: portnumber
+  - host: mame.com(hostname)
+    http:
+      paths:
+      - backend:
+          serviceName: nameoftheservicewhereitshouldpoint
+          servicePort: portnumber
+this one we can use when we want to route the traffic with different hostname
+
+Document for noskript deployment
+
+VNET/Subnet - this will assign IP's to nodes
+Service CIDR - this will assign IPs to services in kubernetes
+DNS server IP - KUBE DNS
+POD CIDR - this will assign IP range to PODS 
+Docker bridge address - this will get the IP to docker0 network
+Network Plugin - Kubenet/Azure CNI
+
+Difference between Azure CNI and Kubenet
+Azure CNI supports 250 pods per nods , support window server node pools whereas kubenet supports 110 pods per node and doesn't support window server node pools.
+Azure CNI Exposes pods using cluster subnet IP's Kubenet requires kubernetes service and azure load balancer to expose the pods these both can be good or bad
+Note - Once created a cluster we won't be able to change azure CNI/Kubenet
+
+Creating cluster with Azure cni
+*************************************
+if we will create VM in same cluster network and try to to telnet from the pod running in cluster to VM it will give pod IP
+
+Creating cluster with kubenet
+*************************************
+if we will create VM in same cluster network and try to to telnet from the pod running in cluster to VM it will give Node IP
+
+Types of deployment -
+******************************
+Canary deployment - Canary deployments are typically used to test some new features on the backend of an application. Two or more services or versions of an application are deployed in parallel, one running an existing version, and one with new features. Users are gradually shifted to the new version, allowing the new version to be validated by exposing it to real users. If no errors are reported, one of the new versions can be gradually deployed to all users.
+Recreate—terminates all the pods and replaces them with the new version.
+Ramped slow rollout—rolls out replicas of the new version, while in parallel, shutting down old replicas. 
+Best-effort controlled rollout—specifies a “max unavailable” parameter which indicates what percentage of existing pods can be unavailable during the upgrade, enabling the rollout to happen much more quickly.
+Blue green deployment - we will have two environment and we will be switching based on the customer review.
+
+configmap
+*******************
+apiVersion: v1
+kind: Pod   
+metadata:
+  name: dapi-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: registry.k8s.io/busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      env:
+        # Define the environment variable
+        - name: SPECIAL_LEVEL_KEY
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: special-config
+              # Specify the key associated with the value
+              key: special.how
+  restartPolicy: Never
+  
+PV and PVC
+**************************
+Reclaim policy
+*****************
+Retain
+Recycle
+Delete
+
+Access mode
+*****************
+Read write once
+Read write many
+Read only
+
+Unable to connect to the server: net/http: TLS handshake timeout
+*********************************************************************
+unset http_proxy
+unset https_proxy
+
+Error: ErrImagePull or ImagePullBackOff
+*********************************
+download the images to your local server and make imagePullPolicy: Never instead of always
+
+CrashLoopBackOff
+****************************************
+It tells us that Kuberenetes is trying to launch this Pod, but one or more of the containers is crashing or getting killed.
+
+RunContainerError
+**************************
+it is running but in between it is looking for config file but it is not able to find
+
+To check the status of kubernetes
+******************************************
+kubectl get cs
+kubectl version --short
+kubelet --version
+
+ConfigMap
+***********************
+A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
+   
+Secrets
+***************
+Secrets are similar to ConfigMaps but are specifically intended to hold confidential data.
+
+-> In order to safely use Secrets, take at least the following steps:
+Enable Encryption at Rest for Secrets.
+Enable or configure RBAC rules with least-privilege access to Secrets.
+Restrict Secret access to specific containers.
+Consider using external Secret store providers.
+
+Kubernetes — Replica Sets and replica controller
+***************************************************
+Replica Set ensures how many replicas of the pod should be running. It can be considered as a replacement or replication controller. 
+The replica set and the replication controller's key difference is that the replication controller only supports equality-based selectors
+whereas the replica set supports set-based selectors
+
+To prevent the node from scheduling new pods
+***********************************************
+kubectl cordon <node-name>
+
+
+To Allow the node from scheduling new pods
+***********************************************
+kubectl uncordon <node-name>
+
+Helm Chart
+***************************************
+it is a package manager for kubernetes
+helm create demochart (it will create dummy chart where you can edit and do other configuration)
+helm list -a (to list all the deployment)
+helm - we can directly use the chart which is managed by helm for that we need to add the repo and install.
+helm repo add reponame repourl
+helm template - command will show how our yaml look like
+helm lint - this will compile the chart and show if any defect
+helm upgrade name - this will update the cluster as per the value we updated in conf files
+helm rollback name 1 - to rollback the changes in the cluster
+
+Kubernetes certificate expiry check
+****************************************
+kubeadm certs check-expiration - this will list the expiry date of all
+kubeadm certs renew all - this will renew all the certificate
+
+Ingress
+************************
+evaluates all the rules
+manages redirections
+entrypoint to cluster
+
+Deployment.yaml
+**********************
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+		
+/etc/systemd/system/docker.service/proxy.conf - from here we can set proxy or insecure registry or .docker/config.json
+/var/lib/docker/volumes/  - default location where docker artifact wil get stored.
+
+docker networks 
+***************
+overlay
+ipvlan
+macvlan
+network plugin
+
+***************************
+apiVersion: apps/v1
+kind: Deployment
+***************************
+apiVersion: v1
+kind: Service
+***************************
+apiVersion: v1
+kind: Pod
+
+
+
+
+
+
+

@@ -1,0 +1,465 @@
+Terraform
+*****************
+It is developed by hashicorp
+
+Terraform version
+*************************
+terraform_1.3.7
+
+Terraform interview Questions
+***********************************
+Terraform state file can be store in anywhere if it is outside it should be in encrypted form as it is having secret information
+Terraform import command we can use if we loose state file and get the state file
+terraform validate - check the validate of the configuration
+Provisioner - it means if we want to modify the resoyrce by the provider like we can use file to copy files and run scripts and install some application etc
+Plugins - when we provide the provider like azure,aws,gcp than it downloads the plugins based on the provider
+terraform stage - will list all the resources provisioned by terraform
+terraform stage rm resource-name - this will delete the particular resource
+depends on - this we can use when we want to call the module once one module is depends on other
+datatypes - with the help of datatypes we can call the existing resources from provider and our tf file
+dynamic block - lets say we want to create unique name
+
+We can define depends_on inside the resource defination block
+****************************************************************
+depends_on = [
+  name_of_the_resources_to_which_current_resource_is_dependent
+]
+
+@Microsoft.KeyVault(SecretUri=https://noscriptkv.vault.azure.net/secrets/DBPASSWORD/1be8e8be0bf84a6f8763e8e667607220)
+Commands 
+****************
+Terraform init - this is for initializing and it will download the plugins
+Terraform validate - this will validate the tf files
+Terraform plan - this will show what is going to happen it will actually have state file	
+Terraform 
+ - this will apply the changes to providers
+
+Terraform file structure
+******************************
+very first we will be defining the provider -
+terraform{
+  required_providers{
+    azurerm = {
+	  source="hashicorp/azurerm"
+	  version="3.8.0"
+	}
+  }
+}
+provider "azurerm" {
+  subscription_id = "value"
+  tenant_id = "value"
+  client_id = "value"
+  client_secret = "value"
+  feactures {}
+}
+
+This is how we can define provider in terraform for azure and to get subscription_id,tenant_id,client_id,client_secret we need to do app registration in azure
+active directory and get the details from the app which we registered in azure active directory. now we have to provide an access from IAM and assign some
+role to app which we registered normally we will be providing contributor access.
+
+after that we will have resource block - example is for creating resource group in azure 
+terraform{
+  required_providers{
+    azurerm = {
+	  source="hashicorp/azurerm"
+	  version="3.8.0"
+	}
+  }
+}
+provider "azurerm" {
+  subscription_id = "value"
+  tenant_id = "value"
+  client_id = "value"
+  client_secret = "value"
+  feactures {}
+}
+resource "azurerm_resource_group" "example" {
+  name = "example"
+  location = "west India"
+}
+
+commands
+*************
+terraform init - this is for intializing the directory and downloading the plugins once we run the terraform init command it will create a .terraform folder
+and also create .terraform.lock.hcl file
+terraform plan - this will create an execution plan
+terraform plan -out main.tfplan - this will store the plan in main.tfplan file
+
+when we run terraform apply command it will not go in any specific order.
+
+Tainted 
+**************
+Tainted command informs terraform that a particular object has become degraded or damaged.
+
+null value in terraform
+************************
+use null value in the variable usuage within the resource block.
+
+terraform untaint - to remove the taint marker from that object
+
+State is a necessary requirement for terraform to function
+
+rollback 
+*****************
+Terraform can't rollback after deployment. so if an error appears in the deployment the issue should be solved in that moment, is possible to destroy
+the deployment , but it will destroy the deployment, but it will destro everything and not rollback the changes.
+
+Flatten in terraform
+**************************
+Takes a list and replaces any elements that are lists with flattened sequence of the list contents.
+
+removing resource
+********************
+Terraform state rm command is used to remove items from the terraform state. this command can remove single resource single instance, entire module and more.
+
+Tuple terraform
+**********************
+A tuple is a strongly typed collection of one pr more values.
+
+To call the variable file
+************************************
+terraform plan -var-file=”prod.tfvars”
+
+Local variable in a block we can define multiple local variable
+*********************************************************
+locals {
+variablename = value
+}
+
+to call variable 
+********************
+local.variablename
+
+Types of values in terraform
+******************************
+string
+number
+bool
+list
+map
+
+we can get the value of the resource like id of the resource - we can check what attributes are defined in the resource we can get that based on that.
+
+output variable
+*****************
+if we want to show the output value we can show them using output variables.
+output "variablename"{
+value= value to be shown for the variable
+}
+once we run plan or apply in the output section it will show this value.
+
+Terraform enterprise
+***************************
+in terraform enterprise we will have sentinal policy check which will check the policy defined
+
+key management and vault can be used to store the sensitive data.
+
+We can create private module registry and store our own module and that can be pulled at later point of time.
+
+Error like - plugin out-of-date,provider unable to sync we can run - terraform init -upgrade
+
+Rollback in terraform
+******************************
+if we updated our code from terraform apply and now we want to rollback we can destroy existing one and apply the older one from github or whatever
+version control we are using.
+
+tainted resource
+********************
+tainted resources are the resources which are forced to delete and recreated in next deployment
+
+How to prevent error - duplicate resource
+discarding resource from API
+
+terraform fmt - to write tf file in canonical style and format. 
+
+Terraform module 
+**********************
+logical group of resources. we can create a module and share across the team to use if they need similar kind of setup
+
+Terraform backend
+*********************
+Terraform backend is nothing but where terraform store its state file
+
+Terraform remote backend
+*****************************
+remote backend could be storage account or any secure location where we are keeping our state file. here we can apply the policy like locking it means if one
+person is updating the state file other person should get some message like it is getting used by other person and it is locked.
+
+How to handle secrets in terraform
+***************************************
+We can keep secrets in some secure location like in storage account and keep the policy IAM and RBAC
+
+Resource graph in Terraform
+*****************************
+This will create a graph of resources and show us how it will look like when we use Terraform plan or Terraform refresh or Terraform apply command
+
+Terraform locking 
+***************************
+Terraform locking is when we don't want multiple people to use state file or commit state file into the secure place which we are using for storing 
+state file.
+
+Defining variable with default value and validation
+******************************************************************
+variable "name_of_the_variable" {
+  type=number
+  description="can give any description"
+  default=can_give_any_default_value
+  validation {
+    condition = var.variablename < 5
+	error_message = "error message"
+  }
+ 
+ To get the value in configuration file
+ *********************************************
+ ${variable}
+
+To mention input variable value 
+*****************************
+Terraform plan -out main.tfplan -var ="nameofvariable=value" -var ="nameofvariable=value"
+
+second option to pass the value of input variable
+****************************************************
+create terraform.tfvars file and here I can write all the variable and value so when we run the terraform plan command it will automatically pick the 
+value from terraform.tfvars file
+
+Variable.tf and variable.tfvars
+*****************************************
+variable.tf are files where all variables are declared; 
+these might or might not have a default value. variable.tfvars are files where the variables are provided/assigned a value.
+
+Data Sources - Normally it means when we need to get the data from the already existing resource in cloud for example - key vault - we can manage keyvault
+and use key vault in our configurationfile using data source
+****************
+Outside resources - This helps to use information defined outside of terraform
+Data block - The data source is defined with the use of the data block
+single resource - Each data source is associated with a single resource
+Provider - The data source depends on the provider
+
+Custom scripts extentions - this we use to run custom scripts on the server lets say we are creating VM and want to run some scripts after creating VM
+We can make use of custom scripts in terraform for example configuring IIS manager on windows so this can be automated with the help of custom scripts.
+**************************************
+
+Random String
+*******************
+resource "random_uuid" "storage" {
+}
+
+output "randomid" {
+  value=random_uuid.storage.result
+}
+
+This output will print the value of the resource random_uuid
+
+substr function divide the string , join function join the string
+
+Null resource
+***************
+Null resource doesn't follow the life cycle like other resources.
+Null resource will have trigger attribute which will help to set when the null resource should execute like after creating storage account or doing after VM deployment.
+
+You can use the null_resource on Output.
+You can also use null_resource with Conditional and Dynamic Expression
+lets say I want to create a container inside the storage account so what i can do is i can use null resoource and inside that i can use local provisioner
+to execute query from the local system to create container inside the storage account.
+example-
+resource "azurerm_storage_account" "name" {
+configuration
+}
+
+resource "null_resource" "name" {
+  provisioner = "local-exec"
+    command = "az storage container ..."
+  }
+}
+
+Null resource will execute only once after running first time it will not execute even if we will change the value in null reource section. it usually dont follow the state.
+
+If we want to run null resource as many times as many resource getting created for example we have given count to storage account and we are creating
+multiple storage account and we want to run null resource each time than we can use Trigger.
+
+Trigger = {
+}
+
+To call module in your code block
+************************************
+module "name" {
+  source = "../"
+}
+
+Terraform.lock.hcl file
+*******************************
+Terraform.lock.hcl , and this name is intended to signify that it is a lock file for various items that Terraform caches in the .terraform subdirectory of your working directory.
+
+Terraform provisioner
+****************************
+Terraform Provisioners are used for executing scripts or shell commands on a local or remote machine as part of resource creation/deletion.
+three types of provisioner - file , remote and local.
+
+To debug terraform code
+****************************
+we can pass the environment variable -
+$env:TF_Log="DEBUG"
+$env:TF_LOG_PATH="pathIncludingfileName"
+
+First one will enable the complete and detailed logs of terraform what happened in background , second one will store the log file in the mentioned path.
+
+features block in terraform
+*********************************
+The Azure Provider allows the behaviour of certain resources to be configured using the features block.
+if we want default behaviour of provider we can keep features as empty.
+provider "azurerm" {
+  features {}
+}
+
+If we want to customize the behaviour we can mention the configuration in features block in terraform
+provider "azurerm" {
+  features {
+    api_management {
+      purge_soft_delete_on_destroy = true
+      recover_soft_deleted         = true
+    }
+
+    app_configuration {
+      purge_soft_delete_on_destroy = true
+      recover_soft_deleted         = true
+    }
+
+    application_insights {
+      disable_generated_rule = false
+    }
+
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = true
+    }
+
+    log_analytics_workspace {
+      permanently_delete_on_destroy = true
+    }
+
+    managed_disk {
+      expand_without_downtime = true
+    }
+
+    resource_group {
+      prevent_deletion_if_contains_resources = true
+    }
+
+    virtual_machine {
+      delete_os_disk_on_deletion     = true
+      graceful_shutdown              = false
+      skip_shutdown_and_force_delete = false
+    }
+  }
+}
+
+Inspect the current state using terraform show
+******************************
+Terraform show
+
+State 
+*********
+terraform state
+list                List resources in the state
+mv                  Move an item in the state
+pull                Pull current state and output to stdout
+push                Update remote state from a local state file
+replace-provider    Replace provider in the state
+rm                  Remove instances from the state
+show                Show a resource in the state
+
+terraform state list
+**********************
+to get the updated list of resources managed in your workspace
+
+terraform show
+*********************
+see the new values associated with this resource group.
+
+For loop
+*******************
+locals {
+  common_tags={
+    "environment" = "staging"
+	"tier" = 3
+	"department" = "IT"
+}
+
+
+tags={
+  for name,value in local.common_tags : name=>"${value}"
+}
+
+This example is gving multiple tags with the help of for loop and reading from local variable.
+
+Dynamic block and for each
+********************
+dynamic blocks are used when we have repetable nested blocks inside the resoource.
+we can use count when we want to create multiple resources but if we have something repeating inside the resource that time we can use dynamic block
+and for each loop for example. we are having nsg rules for one resources so we can have multiple nsg rules for single resource.
+
+resoource "azure_network_security_group" "appgrp"{
+  name = "app-nsg"
+  location = local.location
+  resoource_group_name = local.resoource_group_name
+  
+  dynamic security_rule{
+    for_each=local.networksecuritygroup_rules
+	content {
+	  name="Allow-${security_rule.value.destination_port_range}
+	  priority=security_rule.value.priority
+	  direction="Inbound"
+	  access="Allow"
+	  protocol="TCP"
+	  source_port_range=security_rule.value.destination_port_range
+	  source_address_prefix="*"
+	  destination_address_prefix="*"
+	}
+}
+
+locals {
+  networksecuritygroup_rules=[
+  {
+    priority=200
+	destination_port_range="3389"
+  },
+  {
+    priority=400
+	destination_port_range="3989"
+  }
+  ]
+ }
+ 
+Terraform graph
+*******************
+Terraform graph | dot -Tvsg > graph.svg
+
+Cloudinit
+****************
+this also we generally used for running custom scripts
+
+Provisioner
+******************
+This can be used to implement certain behaviour that cannot be implemented via terraform's declarative model.
+local-exec - This can be used to invoke a local executable after a resoource is created.
+connection block - This describe how to access a remote resoource.
+file provisioner - This can be used to copy files or directories from the machine running terraform to the newly created resoource, this provisioner supports both ssh and winrm type connection.
+ 
+Hasicops docs
+****************
+we can refer to hashicop docs for the resource deployment in azure and respective parameter to be used within the block.
+
+App service plan
+**********************
+We can create App service plan and than we can create app service and depends_on on app service plan.
+
+This is how we can create and apply plan
+******************************************
+Terraform plan -out main.tfplan
+Terraform apply main.tfplan
+
+Azure Web app logging
+**************************
+Different types of logging that are available are -
+Application Logging - This captures log messages that are generated by your application code.
+Web server logging - This records raw HTTP request data

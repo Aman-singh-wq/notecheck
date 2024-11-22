@@ -1,0 +1,38 @@
+compute 
+here we can scale in azure mlops
+our code will get execute in the compute
+Note book - this is for writing the code
+
+Automated ml
+**********************
+we need to click on create - select the dataset 
+we will be seeing pkl file - model
+we will be seeing scrooring.py file which we need to use in our code to get the response from the model
+
+Designer
+****************
+This will help us to create a pipeline through which we can deploy the model
+
+Environment 
+************************
+here we will have all the information regarding the environment what packages we used what os we used and all other information.
+
+Application Insight
+************************
+it will help us to get the logs from the compute.
+
+storage account is for storing a pkl file.
+
+we can develop in our local and run the code in azure compute , we can connect our vscode to azure compute we need to install azure extension to vscode.
+
+ADF
+********
+Manage -> Linked services, Integration runtime, Git configuration, ARM Template , Triggers , Global Parameters , Customer managed key, Managed private endpoint.
+
+Types of Triggers
+******************
+Schedule Triggers - Means it is scheduled on particular time
+Storage Events - it is like something to happen on blob storage.
+Tumbling Windows Events - it means like if we want to trigger on 6 hours interval or any intervals
+
+510 -80-137+25000

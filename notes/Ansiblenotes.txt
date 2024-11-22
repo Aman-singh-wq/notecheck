@@ -1,0 +1,199 @@
+pull base archi
+*********************
+ansible is push base management tool we don't have agent we communicate with ssh that is secure and encrypted
+
+chef and puppet is pull base management tool because agent is present
+
+Ansible diagram
+********************
+Ansiblemaster node
+********************
+Inventory - here we will keep all our server details
+API - it 
+Modules - this we use to write our playbook 
+Plugin - help to execute task 
+
+Ansible Terms
+****************************
+Controller Machine - This machine where ansible is installed, responsible for running the provision on the servers you are managing
+Inventory - Initialization file that contains information about the server you are managing
+playbook - The entry point for ansible provisioning, where the automation is defined through tasks using YAML format.
+Task - A block that defines a single procedure to be executed, ex -install a package
+module - it has a build in module but we can create a custom one as well
+Role - A pre-defined way for organizing playbooks and other files
+Play - execution of play book
+Facts - Global variable containing information about the system, like network interfaces or operating system
+handler - used to trigger service status change, like restarting or stopping of service
+
+host file where we will be mentioning the IP of other VM's
+***************************************************************
+/etc/ansible/hosts
+
+here with the help of this command we can generate the key
+***************************************************************
+ssh-keygen
+
+than we can copy the file in client side
+***********************************************
+ssh-copy-id root@IP 
+201401 - hdfc
+ansible IP -m ping - from this command we can check if connectivity is there
+
+hosts file
+********************
+in host file we can write server ip
+ansible -i pathOfHostFile IP -m ping
+
+Ansible Adhoc commands
+*****************************
+ansible adhoc command format
+ansible hostserver module Arguements
+ansible webserver -m file -a "path=/tmp/testfile state=touch mode=0755" - example of adhoc command
+
+ss-agent bash
+ssh-add ~/.ssh/id_rsa
+
+To run a playbook
+*************************
+ansible-playbook yamlFileName
+YAML - yet another markup language
+every yaml starts with --- and ends with ...(optional)
+
+Format should be yml
+
+variable 
+*************************
+system defined variable ex hostvars, groups ,group_names etc
+user defined variable
+
+---
+ - hosts: all
+   vars:
+   salutations:Hello Everyone
+   gather_facts: no
+   tasks:
+     - name: name of the task
+	 debug:
+	   msg: "{{salutations}}
+	 
+...
+
+
+-become - this will provide sudo access
+
+To define the variable 
+*****************************
+create a folder /etc/ansible/hosts_vars under this folder create file for all the server and for group create group_vars under this folder create a common file.
+
+When
+**************
+this keyword we can use for condition in tasks
+
+we can execute .sh file with task script
+
+to store log of the ansible 
+******************************
+we can give path and filename in /etc/ansible/ansible.cfg
+log_path=/tmp/filename
+
+gather_facts=false 
+
+for firewall
+********************
+we can use firewalld
+
+Tags in Ansible Playbooks
+***************************
+if we have large playbook and now we want to run specific part that time we can make use of tags 
+ansible-playbook ymlFileName --tags="tag_name"
+ansible-playbook ymlFileName --skip-tags="tag_name,tag2NnumberOfTags"
+
+
+To check the syntax
+***************************
+ansible-playbook ymlFileName --syntax-check 
+
+ansible-playbook ymlFileName --syntax-check -become - with this command it will execute with root user
+
+Ansible roles
+******************
+it consists of many playbooks -
+Defaults -
+default directory is for defining the variable default
+it will have lowest priority so easy to override
+if definition of variable is nowhere else the variable in defaults/main.yml will be used
+
+files: 
+we use file directory to add files that are needed by provisioning machine, without modification
+Mostly we use copy task for referencing files in the files directory 
+
+Handlers:
+handlers directory is used for storing ansible handlers
+handlers are tasks that may be flagged during a play to run at the play's completion
+we can have as many and as few handlers as we need.
+
+ansible-galaxy init /etc/ansible/roles/nameforwhichyouwanttocreate - with this command roles will get created
+now under folder task folder will be there where we can create the task
+we can upload and download the roles from ansible galaxy
+
+Ansible vault
+****************************
+this is for storing password, certificate etc
+ansible-vault create nameofPlaybook.yml
+to see encrypted file
+ansible-vault view nameofPlaybook.yml
+To edit
+ansible-vault edit nameofPlaybook.yml
+to change password
+ansible-vault rekey nameofPlaybook.yml
+to decrypt
+ansible-vault decrypt nameofPlaybook.yml
+to execute 
+ansible-playbook nameofPlaybook.yml --ask-vault-pass
+
+To install apace
+*****************************
+---
+  - hosts: apache
+    sudo: yes
+    tasks:
+      - name: install apache2
+        apt: name=apache2 update_cache=yes state=latest
+		
+Roles in Ansible
+***********************
+Roles enable us to reuse and share our Ansible code efficiently. They provide a well-defined framework and structure for setting your tasks, variables, handlers, metadata, templates, and other files
+
+When we create Roles we will get following things
+***************************************************
+defaults –  Includes default values for variables of the role. Here we define some sane default variables, but they have the lowest priority and are usually overridden by other methods to customize the role.
+files  – Contains static and custom files that the role uses to perform various tasks.
+handlers – A set of handlers that are triggered by tasks of the role. 
+meta – Includes metadata information for the role, its dependencies, the author, license, available platform, etc.
+tasks – A list of tasks to be executed by the role. This part could be considered similar to the task section of a playbook.
+templates – Contains Jinja2 template files used by tasks of the role.
+tests – Includes configuration files related to role testing.
+vars – Contains variables defined for the role. These have quite a high precedence in Ansible
+
+Terraform troubleshooting
+************************************
+To understand what terraform is doing in background set env variable = $env:TF_LOG="DEBUG"
+$env:TF_LOG_PATH="pathWhereWeWantToSaveTheLogs" - this we can use if we want to save logs in any particular location
+
+To troubleshoot using azure portal we can go to montior page -> Activity logs -> It will show all the activity happened in azure.
+
+Build In function in Terraform
+************************************
+
+		
+Sonarqube some checks
+**************************
+codesmell - like adding multiple line if it is not used
+security hotspot - like if we used vulnerable packages
+Bug - somewhere we have bug 
+
+in sonarqube we can write our own test cases
+
+
+
+

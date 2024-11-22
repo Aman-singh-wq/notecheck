@@ -1,0 +1,25 @@
+Dashboard - this we can customize based on our need.
+infrastructure - environment - here we can create different environment and add different servers for deployment
+Project - project group - project
+Deployment process - this we can find inside the project - Process - Add step
+Project - releases - here we will find all the releases created by us.
+Configuration - smtp (here we can configure to setup email)
+lifecycle creation , lifecycle phases, lifecycle and Deployment
+library - lifecycle (project - process we can define lifecycle like where it will go first like dev,test,production) after creating lifecycle we can attach lifecycle to project.
+configuration - users (add user  from here we can add users)
+configuration - teams (to add team)
+
+Copy data - like copying csv from blob to sql table
+Get metadata - to load data from blob storage
+delete - to delete files from source once copying is done
+if else - this is for if else condition
+Execute pipeline - this is for executing new pipeline
+webhook - to call webhook means call the another app like teams etc
+dataflow - we can create a dataflow and execute from the pipeline.
+
+
+Dataflow - this we can use to load the data and than do modification into the data accoding to our need and save again in our required location.
+flatten - here we can use flatten to flatten the array. it is part in dataflow
+aggregate - to group to columns
+derived - to get them in a array
+source - derived column - slect - sink

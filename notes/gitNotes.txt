@@ -1,0 +1,149 @@
+https://healthmitra.co.in/
+Git
+**********
+Version control system
+Traked file - when we are changing in the file which are already present in the repo
+Untracked file - when we are changing the file which are not present in the repo and adding new file 
+
+git init - it will create the repo with folder name 
+git init reponame - it will create the repo with reponame
+git add . - this will add to staging
+git commit - this will open the editor there we can add info 
+git commit -m "message" - this will commit the changes in local repo
+
+Reset and remove changes
+*************************************
+git reset HEAD fileNAme - this will remove the changes from staging area
+git checkout -- fileName - this will remove all the changes made in the file
+To reset our local branch same as remote branch -
+git reset --hard
+
+Rename and Remove
+***********************
+git mv currentFileName newFileName - this will show we have changed the fileNAme
+mv currentFileName newFileName - this will show like currentFile is deleted and new file has been created
+git mv filename foldername/ - this will move the file to foldername
+
+Delete
+******************************
+git rm fileNAme 
+git reset HEAD fileNAme - this will bring up the file
+git checkout -- fileNAme - this will bring up the deleted file to current working directory
+
+Log/history
+*******************
+git log - this will show the commit history
+git log --oneline --graph --decorate --all - this will show all the commits in line by line
+git alias
+************************
+git config --global alias.hist "commands" - so now we just need to write hist for the commands
+mate ~/.gitconfig - this will show all the alias
+
+Ignoring unwanted files and folder
+**********************************************
+we can create .gitignore file - we can mention file name in .gitignore file 
+
+Merging tool
+********************************
+P4Merge for windows - this is for comparison and merging
+
+Branching Basics
+*********************************
+git branch -a - this will list all the branches present in local and remote
+git branch newbranch - this will create new branch
+git checkout newbranch - this will change the working branch 
+let say we make changes in newbranch and want to merge back to master 
+git checkout master
+git merge newbranch - this will merge newbranch code to master branch
+git merge branchname --no-ff - this will merge the code but not like fast forward it will merge and master will have all the commit ID 
+this will be kind of fast forward merge - in fast forward merge it is like we didn't make any change in master and only one commit that is the merge
+from new branch it will not show all the commit which we made in newbranch
+git branch -d branchname - to delete the branch
+
+Rebase
+****************
+rebase means let's say we have master branch and child branch now I am working on child branch but in master branch some people already commited the code
+now if I want to commit the code to master I need to rebase the child branch and than merge with master branch so that commit sequence will be there 
+and other people changes will be there
+master - commit1 commit2from here i created child - commit3 - commit4
+child - commit so to commit in master after commit4 I need to rebase child and than commit so that it will be like 
+master - commit1 commit2from here i created child - commit3 - commit4 - commit
+git rebase --abort
+rebase conflict can be resolved in the same way like we do for merge conflict
+
+Stashing
+**********************
+Stashing means when we want to save our changes and not to commit to our repo and want to make another change and commit so what will happen is
+we can stash our current changes make a new change commit and apply the stash change to continue to work on old change.
+git stash list - this will list all the stashed changes
+git stash - this will stash only tracked file
+git stash -u - this will stash all tracked and untracked file
+git stash drop - this will drop the last stash
+git stash save "message" - we can stash multiple times and apply
+git stash apply stash{0} - this will stash first one
+git stash drop stash{0} - this will drop first stash
+git stash clear - it will empty the list of stashes
+git branch -d branchname - this will delete the branch mentioned in the command 
+
+git difftool
+git diff --staged HEAD - this will compare stage and last commit
+git diff HEAD - this will compare working and stage
+git diff master HEAD/master
+
+
+tag
+*********
+git tag tagName - this will create light weight tag
+git tag --list - this will list the tag
+git tag -a tagName - this will create annotated tag
+git diff tagName1 tagName2 - this will show the difference
+git tag -a tagName commitID - this will create a tag with specific to that particular commitID
+git tag -a tagName -f NewCommitID - if we want to pint ssame tag to different commit
+git push origin :tagName - this is how we can delete the tag from remote repo it means push blank to this tag
+
+reset and reflog
+************************
+git reset commitID
+git reset HEAD^ - this will move you to previous commit
+git reset HEAD^1 - this will point you to 2 commit back
+git reflog - this will show all the activity you did in the repository
+
+cherrypick
+************************
+if we want to merge specific commit to any branch than we can use cherrypick
+git cherry-pick commitID
+
+Three types of merge
+**************************
+fast forward merge - git merge --ff-only - merges the branches and moves the destination branch pointer to the tip of the source branch. this is default merge stragy in git
+Squash and merge - git merge --squash - combines all commits from the source branch into a single merge commit in the destination branch.
+git merge --no-ff - creates a merge commit and adds individual source commits to destination branch.
+
+Git remote and git clone
+****************************
+git remote is used to refer to a remote repository or your central repository.
+For e.g: When you want to add a remote repository as your origin
+
+git clone is used to copy or clone a different repository.
+
+Git revert
+*******************
+The easiest way to undo the last Git commit is to execute the “git reset” command with the “–soft” option that will preserve changes done to your files
+
+Git reset
+*******************
+Git reset ~3 - this means it will reset last three commits we can give any number based on our need.
+
+Git fetch and Git pull
+*****************************
+Git Fetch is the command that tells the local repository that there are changes available in the remote repository without bringing the changes into 
+the local repository. Git Pull on the other hand brings the copy of the remote directory changes into the local repository
+
+Branching Strategies
+*****************************
+GitFlow.
+GitHub Flow.
+GitLab Flow.
+Trunk-based development.
+
+
