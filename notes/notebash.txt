@@ -1,0 +1,107 @@
+Manage the submissions created by sending email to outlook email address or drag & drop in the application. 
+Creating submissions by Azure Logic Apps and then sending email file to external API for data extraction. 
+Then validate required fields after receiving data from OIP Data Extraction API. 
+Then auto process the Policy to AMS System APIs if all required data is filled, else move to manual process. 
+Apply Rules on policies like outlook email based on conditions satisfied 
+
+continuous
+DIGITAL ENGINEERING
+
+AWS Solutions Architect - Associate
+
+
+shell 
+
+shell - cmd interface to communicate with kernel
+echo $0 will return current shell value
+bash is the commonly used shell
+to change the shell we can use CHSH command
+sebang line use - #!/bin/bash/ - it tells os which interpreter to use to parse the rest of the file
+-f folderpath - to check where file exist or not
+-d /directory - to check if directory exist
+exit status - 0 means successful
+readonly variablename= value (value will not get change)
+$# - this will tell us how many arguement are passed in the script
+= used for to check if 2 strings are equal
+close case statement - esac
+$* $@
+>>file.txt 2>&1 (this will print all the error and logs in file.txt file.
+read -p "your name" name (this will ask user for the input)
+./script param1 param2 - second way to take input from user
+how to check if user is root - we can check the root id it should be 0
+hardlink-
+softlink-
+we can use -h and -L to check if link is hardlink or softlink
+we can use set -x to debug the script
+cat /etc/shells - this will show total number of shells
+$$ - this will give us current process id
+we can call multiple scripts at a time we can use script name with the script
+while true - we can use to make infinite loop
+${0} - this we can use check the name of the script
+function name {
+  code
+}
+function(){}
+du -sh /home/aman - to check the space under folder
+journalctl -u servicename - to check the logs of the service
+
+
+if we don't want to print output on terminal as well as on in file we can redirect output to dev/null
+sleep 1s - this will hold the script for 1s
+$? - to check status of the script
+
+Jenkins
+*************
+pipeline{
+agent any
+environment{
+image_tag=name
+}
+stages{
+stage('name'){
+steps{
+git}
+}
+stage('docker build'){
+steps{
+docker commands
+}
+}
+}
+
+triggers
+*************
+Poll scm
+build trigger
+web hooks
+
+backup jenkins - we can take a backup of .jenkins folder using async
+handles secret in jenkins - hashicorp vault we can use to securely store our secrets or credential plugin we can install and use to store secrets 
+jenkins latest version - 2.346.1
+
+new worker node in jenkins - manage jenkins - manage nodes -new node
+new plugin - manage jenkins - manage plugin 
+JNLP - this allows master node to talk to child nodes in jenkins
+to update url in ui - manage jenkins - configure system - jenkins /etc/default/jenkins
+
+manage jenkins - users - create user
+manage jenkins - plugins - role based authentication 
+manage jenkins - security - role base authentication
+manage jenkins - manage and assign roles 
+
+plugin issue - we can rollback the update and see if it resolved or we can refer document of plugin
+if userface slowness in jenkins - we can start looking jenkins system metrics such as cpu utilization,memory usuage disk io etc. we can check the configuration how jenkins
+executing builds , build queue management, plugin usuage etc additionally we can think of horizontally or vertically scalling jenkins.
+to check the vulnerability on the application which are deployed by jenkins we can use the security vulnerability scanning tools such as ZAP,OWASP,Trivy etc. in post build steps.
+manage multiple git branches each with its own jenkins pipeline how we can manage pipeline effectively - we can make use of jenkins multibranch pipeline so that it 
+can detect and build branches based on predefined pipeline configuration stored in source control.
+we can utilize jenkins credential plugin to securely store and manage credentials for accessing external services such as api token,ssh keys etc.
+jenkins notification plugin - we can make use of this plugin to send notifications to teams slack email etc.
+
+jenkins pipeline - it means pipeline as a code , free style pipeline - it is pipeline configuration from UI.
+Declarative pipeline - simpler workflow, structured and simplified syntax
+Scripted pipeline - Complex scenario and Flexibility and control.
+jenkins shared library - here we can have our groovy resused code which we can refer in a pipeline.
+jenkins blue ocean - it is extensive version of jenkins ui
+jenkins x - CI CD solution for kubernetive application.
+parallel directive we can use in our pipeline to run stages in parallel
